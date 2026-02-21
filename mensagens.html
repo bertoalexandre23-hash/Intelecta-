@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagens - Intelecta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+        }
+
+        /* Header */
+        header {
+            background-color: #2563EB;
+            padding: 15px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .header-icons a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-icons i {
+            font-size: 18px;
+            margin-bottom: 3px;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* Card principal */
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Título */
+        .titulo {
+            background-color: #2563EB;
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .titulo i {
+            margin-right: 10px;
+        }
+
+        /* Grid de mensagens */
+        .mensagens-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 500px;
+        }
+
+        /* Lista de conversas */
+        .lista-conversas {
+            border-right: 1px solid #eee;
+            background-color: #f9f9f9;
+        }
+
+        .busca {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .busca input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .conversa {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .conversa:hover {
+            background-color: #f0f2f5;
+        }
+
+        .conversa.ativa {
+            background-color: #e6f0ff;
+            border-left: 4px solid #2563EB;
+        }
+
+        .foto-conversa {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #2563EB;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .info-conversa {
+            flex: 1;
+        }
+
+        .info-conversa h4 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        .info-conversa p {
+            color: #666;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .hora {
+            color: #999;
+            font-size: 11px;
+        }
+
+        /* Área do chat */
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2563EB;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .chat-info h4 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        .chat-info p {
+            color: #28a745;
+            font-size: 12px;
+        }
+
+        .chat-mensagens {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        .mensagem {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .mensagem.recebida {
+            justify-content: flex-start;
+        }
+
+        .mensagem.enviada {
+            justify-content: flex-end;
+        }
+
+        .bolha {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .recebida .bolha {
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+
+        .enviada .bolha {
+            background-color: #2563EB;
+            color: white;
+        }
+
+        .hora-mensagem {
+            font-size: 10px;
+            color: #999;
+            margin-top: 3px;
+            text-align: right;
+        }
+
+        .chat-input {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            background-color: #2563EB;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .chat-input button:hover {
+            background-color: #1e4bb3;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 13px;
+        }
+
+        footer a {
+            color: #2563EB;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 700px) {
+            .mensagens-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lista-conversas {
+                display: none;
+            }
+            
+            .header-icons span {
+                display: none;
+            }
+            
+            .header-icons {
+                gap: 15px;
+            }
+            
+            .header-icons i {
+                font-size: 22px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="feed.html">Intelecta</a>
+        </div>
+        <div class="header-icons">
+            <a href="feed.html"><i class="fas fa-home"></i><span>Início</span></a>
+            <a href="conexoes.html"><i class="fas fa-user-friends"></i><span>Conexões</span></a>
+            <a href="mensagens.html"><i class="fas fa-envelope"></i><span>Mensagens</span></a>
+            <a href="grupos.html"><i class="fas fa-users"></i><span>Grupos</span></a>
+            <a href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="titulo">
+                <i class="fas fa-comments"></i> Mensagens
+            </div>
+            
+            <div class="mensagens-grid">
+                <!-- Lista de conversas -->
+                <div class="lista-conversas">
+                    <div class="busca">
+                        <input type="text" placeholder="Pesquisar conversas...">
+                    </div>
+                    
+                    <div class="conversa ativa">
+                        <div class="foto-conversa">CR</div>
+                        <div class="info-conversa">
+                            <h4>Cristiano Ronaldo</h4>
+                            <p>Vamos estudar amanhã?</p>
+                        </div>
+                        <div class="hora">10:30</div>
+                    </div>
+
+                    <div class="conversa">
+                        <div class="foto-conversa">MC</div>
+                        <div class="info-conversa">
+                            <h4>Maria Carlos</h4>
+                            <p>Consegui os apontamentos</p>
+                        </div>
+                        <div class="hora">09:15</div>
+                    </div>
+
+                    <div class="conversa">
+                        <div class="foto-conversa">JT</div>
+                        <div class="info-conversa">
+                            <h4>João Tembe</h4>
+                            <p>Grupo de estudo hoje?</p>
+                        </div>
+                        <div class="hora">Ontem</div>
+                    </div>
+
+                    <div class="conversa">
+                        <div class="foto-conversa">AM</div>
+                        <div class="info-conversa">
+                            <h4>Ana Machel</h4>
+                            <p>Obrigada pela ajuda!</p>
+                        </div>
+                        <div class="hora">Ontem</div>
+                    </div>
+
+                    <div class="conversa">
+                        <div class="foto-conversa">PM</div>
+                        <div class="info-conversa">
+                            <h4>Pedro Muianga</h4>
+                            <p>Viste o email da facul...</p>
+                        </div>
+                        <div class="hora">23/02</div>
+                    </div>
+                </div>
+
+                <!-- Área do chat -->
+                <div class="chat-area">
+                    <div class="chat-header">
+                        <div class="chat-foto">CR</div>
+                        <div class="chat-info">
+                            <h4>Cristiano Ronaldo</h4>
+                            <p>Online</p>
+                        </div>
+                    </div>
+
+                    <div class="chat-mensagens" id="chatMensagens">
+                        <div class="mensagem recebida">
+                            <div class="bolha">
+                                Olá! Tudo bem?
+                                <div class="hora-mensagem">10:15</div>
+                            </div>
+                        </div>
+
+                        <div class="mensagem enviada">
+                            <div class="bolha">
+                                Tudo sim! E contigo?
+                                <div class="hora-mensagem">10:16</div>
+                            </div>
+                        </div>
+
+                        <div class="mensagem recebida">
+                            <div class="bolha">
+                                Tudo bem também. Viste o trabalho de psicologia que a prof passou?
+                                <div class="hora-mensagem">10:17</div>
+                            </div>
+                        </div>
+
+                        <div class="mensagem enviada">
+                            <div class="bolha">
+                                Vi sim. Vamos fazer juntos?
+                                <div class="hora-mensagem">10:18</div>
+                            </div>
+                        </div>
+
+                        <div class="mensagem recebida">
+                            <div class="bolha">
+                                Boa ideia! Podemos estudar amanhã na biblioteca.
+                                <div class="hora-mensagem">10:19</div>
+                            </div>
+                        </div>
+
+                        <div class="mensagem enviada">
+                            <div class="bolha">
+                                Combinado. 14h?
+                                <div class="hora-mensagem">10:20</div>
+                            </div>
+                        </div>
+
+                        <div class="mensagem recebida">
+                            <div class="bolha">
+                                Perfeito! Até amanhã.
+                                <div class="hora-mensagem">10:21</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input">
+                        <input type="text" id="mensagemInput" placeholder="Escreve uma mensagem..." onkeypress="if(event.key === 'Enter') enviarMensagem()">
+                        <button onclick="enviarMensagem()"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Intelecta © 2024 - Estudantes de Moçambique</p>
+        <p>
+            <a href="#">Sobre</a> |
+            <a href="#">Termos</a> |
+            <a href="#">Privacidade</a> |
+            <a href="index.html">Sair</a>
+        </p>
+    </footer>
+
+    <script>
+        function enviarMensagem() {
+            const input = document.getElementById('mensagemInput');
+            const texto = input.value.trim();
+            
+            if (texto) {
+                const chat = document.getElementById('chatMensagens');
+                const agora = new Date();
+                const hora = agora.getHours().toString().padStart(2, '0') + ':' + agora.getMinutes().toString().padStart(2, '0');
+                
+                const div = document.createElement('div');
+                div.className = 'mensagem enviada';
+                div.innerHTML = `
+                    <div class="bolha">
+                        ${texto}
+                        <div class="hora-mensagem">${hora}</div>
+                    </div>
+                `;
+                
+                chat.appendChild(div);
+                input.value = '';
+                chat.scrollTop = chat.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>

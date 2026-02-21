@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registo - Intelecta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+        }
+
+        /* Header simples */
+        header {
+            background-color: #2563EB;
+            padding: 15px 20px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        /* Card do formulário */
+        .form-card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .form-card h2 {
+            color: #2563EB;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        /* Campos do formulário */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2563EB;
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #2563EB;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #1e4bb3;
+        }
+
+        /* Link para login */
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #2563EB;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Termos e condições */
+        .terms {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .terms a {
+            color: #2563EB;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #2563EB;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header com link para voltar à página inicial -->
+    <header>
+        <a href="index.html">Intelecta</a>
+    </header>
+
+    <!-- Formulário de registo -->
+    <div class="container">
+        <div class="form-card">
+            <h2>Criar conta</h2>
+            
+            <form action="criar-perfil.html" method="GET">
+                <div class="form-group">
+                    <label for="nome">Nome completo</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="exemplo@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" placeholder="Crie uma senha" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmar-senha">Confirmar senha</label>
+                    <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Digite a senha novamente" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Criar conta</button>
+            </form>
+
+            <div class="login-link">
+                Já tens conta? <a href="login.html">Entrar</a>
+            </div>
+
+            <div class="terms">
+                Ao criar conta, concordas com os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer simples -->
+    <footer>
+        <p>Intelecta © 2026</p>
+        <p>
+            <a href="#">Sobre</a> |
+            <a href="#">Termos</a> |
+            <a href="#">Privacidade</a>
+        </p>
+    </footer>
+</body>
+</html>

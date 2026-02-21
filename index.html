@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelecta - Rede Social para Estudantes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+        }
+
+        /* Header simples só com o nome */
+        header {
+            background-color: #2563EB;
+            padding: 15px 20px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Título principal */
+        h1 {
+            font-size: 48px;
+            color: #2563EB;
+            margin-bottom: 20px;
+        }
+
+        /* Subtítulo */
+        .subtitle {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: #2563EB;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1e4bb3;
+        }
+
+        .btn-outline {
+            background-color: white;
+            color: #2563EB;
+            border: 2px solid #2563EB;
+        }
+
+        .btn-outline:hover {
+            background-color: #2563EB;
+            color: white;
+        }
+
+        /* Seções */
+        .section {
+            background-color: white;
+            padding: 40px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #2563EB;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .section p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Passos */
+        .steps {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            padding: 20px;
+        }
+
+        .step .number {
+            background-color: #2563EB;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+
+        /* CTA final */
+        .cta {
+            background-color: #2563EB;
+            color: white;
+            text-align: center;
+            padding: 50px;
+            border-radius: 10px;
+        }
+
+        .cta h2 {
+            color: white;
+        }
+
+        .cta .btn-white {
+            background-color: white;
+            color: #2563EB;
+            border: none;
+        }
+
+        .cta .btn-white:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #2563EB;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header só com o nome -->
+    <header>
+        Intelecta
+    </header>
+
+    <!-- Conteúdo principal -->
+    <div class="container">
+        <h1>Conecta-te com estudantes de Moçambique</h1>
+        <p class="subtitle">A rede social feita por e para estudantes moçambicanos. Partilha conhecimento, encontra grupos de estudo e constrói o teu futuro.</p>
+        
+        <!-- Botões de ação -->
+        <div>
+            <a href="register.html" class="btn btn-primary">Criar Conta</a>
+            <a href="login.html" class="btn btn-outline">Entrar</a>
+        </div>
+
+        <!-- Como funciona -->
+        <div class="section">
+            <h2>Como funciona</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="number">1</div>
+                    <h3>Cria o teu perfil</h3>
+                    <p>Regista-te e cria o teu perfil estudantil com universidade e curso.</p>
+                </div>
+                <div class="step">
+                    <div class="number">2</div>
+                    <h3>Conecta-te</h3>
+                    <p>Encontra colegas do mesmo curso ou universidade.</p>
+                </div>
+                <div class="step">
+                    <div class="number">3</div>
+                    <h3>Partilha</h3>
+                    <p>Publica dúvidas, partilha apontamentos e aprende em grupo.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vantagens -->
+        <div class="section">
+            <h2>Porquê usar a Intelecta?</h2>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                <div>
+                    <h3>🎓 Foco Académico</h3>
+                    <p>Rede social exclusiva para estudantes, sem distrações.</p>
+                </div>
+                <div>
+                    <h3>📍 Feito em Moçambique</h3>
+                    <p>Pensado para a realidade dos estudantes moçambicanos.</p>
+                </div>
+                <div>
+                    <h3>👥 Grupos de Estudo</h3>
+                    <p>Cria grupos por disciplina, curso ou universidade.</p>
+                </div>
+                <div>
+                    <h3>💼 Oportunidades</h3>
+                    <p>Informações sobre estágios, bolsas e eventos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA final (padronizado com os botões) -->
+        <div class="cta">
+            <h2>Pronto para começar?</h2>
+            <p style="color: white; margin-bottom: 20px;">Junta-te a estudantes moçambicanos na Intelecta.</p>
+            <a href="register.html" class="btn btn-white">Criar Conta Agora</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Intelecta © 2024 - Rede Social para Estudantes de Moçambique</p>
+        <p>
+            <a href="#">Sobre</a> |
+            <a href="#">Termos</a> |
+            <a href="#">Privacidade</a> |
+            <a href="#">Contacto</a>
+        </p>
+    </footer>
+</body>
+</html>

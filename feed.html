@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed - Intelecta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+        }
+
+        /* Header */
+        header {
+            background-color: #2563EB;
+            padding: 10px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 25px;
+        }
+
+        .header-icons a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-icons a:hover {
+            opacity: 0.8;
+        }
+
+        .header-icons i {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr 250px;
+            gap: 20px;
+        }
+
+        /* Sidebar Esquerda - Perfil */
+        .sidebar-left {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .perfil-resumo {
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .foto-perfil {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #2563EB;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            font-weight: bold;
+            margin: 0 auto 10px;
+        }
+
+        .perfil-resumo h3 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .perfil-resumo p {
+            color: #2563EB;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .perfil-resumo .curso {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .menu-lateral {
+            margin-top: 15px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .menu-item:hover {
+            background-color: #f0f2f5;
+            color: #2563EB;
+        }
+
+        .menu-item.ativo {
+            background-color: #e6f0ff;
+            color: #2563EB;
+            font-weight: bold;
+        }
+
+        /* Feed Central */
+        .feed {
+            background-color: transparent;
+        }
+
+        /* Criar post */
+        .criar-post {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .post-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .mini-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2563EB;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .post-input input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            background-color: #f0f2f5;
+        }
+
+        .post-input input:focus {
+            outline: none;
+            border-color: #2563EB;
+            background-color: white;
+        }
+
+        .post-acoes {
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .btn-post {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 8px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-post:hover {
+            background-color: #f0f2f5;
+            color: #2563EB;
+        }
+
+        /* Card de post */
+        .post-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .post-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .post-info h4 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        .post-info .post-detalhes {
+            color: #666;
+            font-size: 12px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .post-conteudo {
+            margin-bottom: 15px;
+        }
+
+        .post-conteudo p {
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .post-conteudo img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .post-estatisticas {
+            display: flex;
+            gap: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .post-interacoes {
+            display: flex;
+            gap: 10px;
+            padding-top: 10px;
+        }
+
+        .btn-interacao {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 8px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-interacao:hover {
+            background-color: #f0f2f5;
+        }
+
+        .btn-curtir.curtido {
+            color: #2563EB;
+            font-weight: bold;
+        }
+
+        /* Sidebar Direita */
+        .sidebar-right {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-titulo {
+            color: #2563EB;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .sugestao-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sugestao-item:last-child {
+            border-bottom: none;
+        }
+
+        .sugestao-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2563EB;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .sugestao-info {
+            flex: 1;
+        }
+
+        .sugestao-info h5 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .sugestao-info p {
+            color: #666;
+            font-size: 11px;
+        }
+
+        .btn-seguir {
+            background-color: #2563EB;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-seguir:hover {
+            background-color: #1e4bb3;
+        }
+
+        .btn-seguir.seguindo {
+            background-color: #28a745;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 14px;
+            background-color: white;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #2563EB;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 800px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-left, .sidebar-right {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-icons span {
+                display: none;
+            }
+            .header-icons i {
+                font-size: 24px;
+                margin-bottom: 0;
+            }
+        }
+    </style>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <a href="feed.html">Intelecta</a>
+        </div>
+        <div class="header-icons">
+            <a href="feed.html">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="conexoes.html">
+                <i class="fas fa-user-friends"></i>
+                <span>Conexões</span>
+            </a>
+            <a href="mensagens.html">
+                <i class="fas fa-envelope"></i>
+                <span>Mensagens</span>
+            </a>
+            <a href="grupos.html">
+                <i class="fas fa-users"></i>
+                <span>Grupos</span>
+            </a>
+            <a href="perfil.html">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Container principal -->
+    <div class="container">
+        <!-- Sidebar Esquerda -->
+        <aside class="sidebar-left">
+            <div class="perfil-resumo">
+                <div class="foto-perfil">MC</div>
+                <h3>Maria Carlos</h3>
+                <p>Universidade Eduardo Mondlane</p>
+                <p class="curso">Engenharia Informática • 3º Ano</p>
+            </div>
+            <div class="menu-lateral">
+                <a href="feed.html" class="menu-item ativo">
+                    <i class="fas fa-newspaper"></i> Feed
+                </a>
+                <a href="perfil.html" class="menu-item">
+                    <i class="fas fa-user"></i> Meu Perfil
+                </a>
+                <a href="conexoes.html" class="menu-item">
+                    <i class="fas fa-user-friends"></i> Conexões
+                </a>
+                <a href="grupos.html" class="menu-item">
+                    <i class="fas fa-users"></i> Meus Grupos
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-bookmark"></i> Salvos
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog"></i> Configurações
+                </a>
+            </div>
+        </aside>
+
+        <!-- Feed Central -->
+        <main class="feed">
+            <!-- Criar publicação -->
+            <div class="criar-post">
+                <div class="post-input">
+                    <div class="mini-foto">MC</div>
+                    <input type="text" placeholder="No que estás a pensar, Maria?">
+                </div>
+                <div class="post-acoes">
+                    <button class="btn-post"><i class="fas fa-image"></i> Foto</button>
+                    <button class="btn-post"><i class="fas fa-video"></i> Vídeo</button>
+                    <button class="btn-post"><i class="fas fa-file-alt"></i> Documento</button>
+                </div>
+            </div>
+
+            <!-- Post 1 -->
+            <article class="post-card">
+                <div class="post-header">
+                    <div class="mini-foto">JT</div>
+                    <div class="post-info">
+                        <h4>João Tembe</h4>
+                        <div class="post-detalhes">
+                            <span>UEM - Eng. Informática</span>
+                            <span>• 2h atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-conteudo">
+                    <p>Pessoal, alguém tem apontamentos de Cálculo I? Estou a preparar-me para o exame e precisava de materiais de apoio. Se puderem partilhar, agradeço! 🇲🇿</p>
+                </div>
+                <div class="post-estatisticas">
+                    <span><i class="far fa-heart"></i> 24 curtidas</span>
+                    <span><i class="far fa-comment"></i> 8 comentários</span>
+                </div>
+                <div class="post-interacoes">
+                    <button class="btn-interacao btn-curtir" onclick="curtir(this)">
+                        <i class="far fa-heart"></i> Curtir
+                    </button>
+                    <button class="btn-interacao">
+                        <i class="far fa-comment"></i> Comentar
+                    </button>
+                    <button class="btn-interacao">
+                        <i class="far fa-share-square"></i> Partilhar
+                    </button>
+                </div>
+            </article>
+
+            <!-- Post 2 (com imagem) -->
+            <article class="post-card">
+                <div class="post-header">
+                    <div class="mini-foto">AM</div>
+                    <div class="post-info">
+                        <h4>Ana Machel</h4>
+                        <div class="post-detalhes">
+                            <span>UniLúrio - Medicina</span>
+                            <span>• 5h atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-conteudo">
+                    <p>Grupo de estudo para Anatomia! Quem quiser juntar-se, vamos reunir todos os sábados na biblioteca central. Comentem aqui se tiverem interesse! 📚</p>
+                    <img src="https://via.placeholder.com/600x300/2563EB/white?text=Estudo+em+grupo" alt="Grupo de estudo">
+                </div>
+                <div class="post-estatisticas">
+                    <span><i class="far fa-heart"></i> 56 curtidas</span>
+                    <span><i class="far fa-comment"></i> 15 comentários</span>
+                </div>
+                <div class="post-interacoes">
+                    <button class="btn-interacao btn-curtir" onclick="curtir(this)">
+                        <i class="far fa-heart"></i> Curtir
+                    </button>
+                    <button class="btn-interacao">
+                        <i class="far fa-comment"></i> Comentar
+                    </button>
+                    <button class="btn-interacao">
+                        <i class="far fa-share-square"></i> Partilhar
+                    </button>
+                </div>
+            </article>
+
+            <!-- Post 3 -->
+            <article class="post-card">
+                <div class="post-header">
+                    <div class="mini-foto">PM</div>
+                    <div class="post-info">
+                        <h4>Pedro Muianga</h4>
+                        <div class="post-detalhes">
+                            <span>ISCTEM - Gestão</span>
+                            <span>• 1 dia atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-conteudo">
+                    <p>Oportunidade de estágio na Vodacom! Estão abertas as candidaturas para estudantes de TI e Gestão. Quem tiver interesse, pode mandar mensagem privada que partilho o link. Boa sorte a todos! 💼</p>
+                </div>
+                <div class="post-estatisticas">
+                    <span><i class="far fa-heart"></i> 89 curtidas</span>
+                    <span><i class="far fa-comment"></i> 23 comentários</span>
+                </div>
+                <div class="post-interacoes">
+                    <button class="btn-interacao btn-curtir" onclick="curtir(this)">
+                        <i class="far fa-heart"></i> Curtir
+                    </button>
+                    <button class="btn-interacao">
+                        <i class="far fa-comment"></i> Comentar
+                    </button>
+                    <button class="btn-interacao">
+                        <i class="far fa-share-square"></i> Partilhar
+                    </button>
+                </div>
+            </article>
+
+            <!-- Post 4 -->
+            <article class="post-card">
+                <div class="post-header">
+                    <div class="mini-foto">FN</div>
+                    <div class="post-info">
+                        <h4>Filomena Nkosi</h4>
+                        <div class="post-detalhes">
+                            <span>UP - Ensino de Matemática</span>
+                            <span>• 2 dias atrás</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-conteudo">
+                    <p>Encontrei este canal no YouTube com ótimas aulas de Cálculo. Partilhando com quem está com dificuldades: <br> www.youtube.com/calculoparatos</p>
+                </div>
+                <div class="post-estatisticas">
+                    <span><i class="far fa-heart"></i> 34 curtidas</span>
+                    <span><i class="far fa-comment"></i> 5 comentários</span>
+                </div>
+                <div class="post-interacoes">
+                    <button class="btn-interacao btn-curtir" onclick="curtir(this)">
+                        <i class="far fa-heart"></i> Curtir
+                    </button>
+                    <button class="btn-interacao">
+                        <i class="far fa-comment"></i> Comentar
+                    </button>
+                    <button class="btn-interacao">
+                        <i class="far fa-share-square"></i> Partilhar
+                    </button>
+                </div>
+            </article>
+        </main>
+
+  <!-- Sidebar Direita -->
+        <aside class="sidebar-right">
+            <div class="sidebar-titulo">
+                <i class="fas fa-user-plus"></i> Sugestões para ti
+            </div>
+            <div class="sugestao-item">
+                <div class="sugestao-foto">CT</div>
+                <div class="sugestao-info">
+                    <h5>Carlos Tembe</h5>
+                    <p>UEM - Eng. Civil</p>
+                </div>
+                <button class="btn-seguir" onclick="seguir(this)">Seguir</button>
+            </div>
+            <div class="sugestao-item">
+                <div class="sugestao-foto">HN</div>
+                <div class="sugestao-info">
+                    <h5>Helena Nhampossa</h5>
+                    <p>UniLúrio - Enfermagem</p>
+                </div>
+                <button class="btn-seguir" onclick="seguir(this)">Seguir</button>
+            </div>
+            <div class="sugestao-item">
+                <div class="sugestao-foto">RM</div>
+                <div class="sugestao-info">
+                    <h5>Ricardo Muianga</h5>
+                    <p>ISCTEM - Contabilidade</p>
+                </div>
+                <button class="btn-seguir" onclick="seguir(this)">Seguir</button>
+            </div>
+            <div class="sugestao-item">
+                <div class="sugestao-foto">LS</div>
+                <div class="sugestao-info">
+                    <h5>Lúcia Sitoe</h5>
+                    <p>UEM - Direito</p>
+                </div>
+                <button class="btn-seguir" onclick="seguir(this)">Seguir</button>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="sidebar-titulo">
+                    <i class="fas fa-users"></i> Grupos recomendados
+                </div>
+                <div class="sugestao-item">
+                    <div class="sugestao-foto"><i class="fas fa-users"></i></div>
+                    <div class="sugestao-info">
+                        <h5>Matemática 12ª Classe</h5>
+                        <p>1.2k membros</p>
+                    </div>
+                    <button class="btn-seguir">Entrar</button>
+                </div>
+                <div class="sugestao-item">
+                    <div class="sugestao-foto"><i class="fas fa-users"></i></div>
+                    <div class="sugestao-info">
+                        <h5>Programação Web</h5>
+                        <p>850 membros</p>
+                    </div>
+                    <button class="btn-seguir">Entrar</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Intelecta © 2024 - Rede Social para Estudantes de Moçambique</p>
+        <p>
+            <a href="#">Sobre</a> |
+            <a href="#">Termos</a> |
+            <a href="#">Privacidade</a> |
+            <a href="#">Ajuda</a> |
+            <a href="index.html">Sair</a>
+        </p>
+    </footer>
+
+    <script>
+        // Função para curtir posts
+        function curtir(botao) {
+            const icone = botao.querySelector('i');
+            if (botao.classList.contains('curtido')) {
+                botao.classList.remove('curtido');
+                icone.className = 'far fa-heart';
+                botao.innerHTML = '<i class="far fa-heart"></i> Curtir';
+            } else {
+                botao.classList.add('curtido');
+                icone.className = 'fas fa-heart';
+                botao.innerHTML = '<i class="fas fa-heart"></i> Curtido';
+            }
+        }
+
+        // Função para seguir pessoas
+        function seguir(botao) {
+            if (botao.classList.contains('seguindo')) {
+                botao.classList.remove('seguindo');
+                botao.innerHTML = 'Seguir';
+            } else {
+                botao.classList.add('seguindo');
+                botao.innerHTML = 'Seguindo';
+            }
+        }
+
+        // Aplicar as funções a todos os botões
+        document.querySelectorAll('.btn-curtir').forEach(botao => {
+            botao.onclick = function() { curtir(this); };
+        });
+
+        document.querySelectorAll('.btn-seguir').forEach(botao => {
+            botao.onclick = function() { seguir(this); };
+        });
+    </script>
+</body>
+</html>
