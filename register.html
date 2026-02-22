@@ -206,5 +206,16 @@
             <a href="#">Privacidade</a>
         </p>
     </footer>
+    <!-- Biblioteca Supabase (via CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  // INICIALIZAÇÃO DO SUPABASE
+  const supabaseUrl = 'https://kvcposzbunjnhxtrgczc.supabase.co'  // COLOCA A TUA URL AQUI
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2Y3Bvc3pidW5qbmh4dHJjZ3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MzkzODgsImV4cCI6MjA4NzMxNTM4OH0.Bsv7hL3jXdIPgux5pVXO9diNjAogIS8az5oPy9SUXio'                   // COLOCA A TUA CHAVE AQUI
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+  
+  console.log('Supabase carregado com sucesso!')
+</script>
 </body>
 </html>
