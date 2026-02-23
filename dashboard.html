@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Intelecta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F5F7FA;
+        }
+
+        :root {
+            --azul-escuro: #0A1929;
+            --preto: #0F0F0F;
+            --dourado: #CFAF4E;
+            --branco: #FFFFFF;
+        }
+
+        header {
+            background: var(--azul-escuro);
+            padding: 1rem 0;
+            border-bottom: 3px solid var(--dourado);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--dourado);
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--branco);
+        }
+
+        .btn-sair {
+            background: transparent;
+            border: 2px solid var(--dourado);
+            color: var(--dourado);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .dashboard {
+            padding: 2rem;
+        }
+
+        .boas-vindas {
+            background: linear-gradient(135deg, var(--azul-escuro), var(--preto));
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            border-left: 6px solid var(--dourado);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+        }
+
+        .card h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        footer {
+            background: var(--preto);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .cards { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">INTELECTA</a>
+            <div class="user-menu" id="userMenu">
+                <span id="userName">Carregando...</span>
+                <button class="btn-sair" onclick="sair()">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container dashboard">
+        <div class="boas-vindas" id="boasVindas">
+            <h2>Bem-vindo(a) de volta, <span style="color: var(--dourado);" id="nomeDashboard">...</span>!</h2>
+            <p>O que queres fazer hoje?</p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>📚 Grupos de Estudo</h3>
+                <p>Encontra grupos da tua área</p>
+                <button class="btn">Explorar grupos</button>
+            </div>
+            <div class="card">
+                <h3>👥 Networking</h3>
+                <p>Conecta com outros estudantes</p>
+                <button class="btn">Ver conexões</button>
+            </div>
+            <div class="card">
+                <h3>📝 Meu Perfil</h3>
+                <p>Completa ou edita teu perfil</p>
+                <button class="btn" onclick="editarPerfil()">Ver perfil</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Intelecta - Conectando estudantes moçambicanos</p>
+    </footer>
+
+    <script>
+        const sessao = JSON.parse(localStorage.getItem('sessao'));
+        
+        if (!sessao) {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('userName').textContent = sessao.nome;
+        document.getElementById('nomeDashboard').textContent = sessao.nome.split(' ')[0];
+
+        function sair() {
+            localStorage.removeItem('sessao');
+            window.location.href = 'index.html';
+        }
+
+        function editarPerfil() {
+            window.location.href = 'criar-perfil.html';
+        }
+    </script>
+</body>
+</html>

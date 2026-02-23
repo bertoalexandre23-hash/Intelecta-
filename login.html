@@ -1,223 +1,482 @@
 <!DOCTYPE html>
-<html lang="pt-MZ">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrar - Intelecta</title>
+    <title>Intelecta - Registo</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            background-color: #f0f2f5;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0A1929 0%, #0F0F0F 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
 
-        /* Header simples */
-        header {
-            background-color: #2563EB;
-            padding: 15px 20px;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
+        :root {
+            --azul-escuro: #0A1929;
+            --preto: #0F0F0F;
+            --dourado: #CFAF4E;
+            --dourado-claro: #E5C87C;
+            --branco: #FFFFFF;
+            --cinza: #E0E4E9;
+            --erro: #DC2626;
         }
 
-        header a {
-            color: white;
-            text-decoration: none;
-        }
-
-        /* Container principal */
-        .container {
+        .registo-container {
             max-width: 500px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-
-        /* Card do formulário */
-        .form-card {
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .form-card h2 {
-            color: #2563EB;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 28px;
-        }
-
-        /* Campos do formulário */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .form-group input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
+            background: var(--branco);
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: slideUp 0.5s ease;
         }
 
-        .form-group input:focus {
-            outline: none;
-            border-color: #2563EB;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Opções adicionais */
-        .form-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 14px;
+        .header {
+            background: linear-gradient(135deg, var(--azul-escuro), var(--preto));
+            padding: 2.5rem;
+            text-align: center;
+            border-bottom: 4px solid var(--dourado);
         }
 
-        .remember {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #666;
+        .header h1 {
+            color: var(--branco);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
         }
 
-        .forgot-password {
-            color: #2563EB;
-            text-decoration: none;
+        .header h1 span {
+            color: var(--dourado);
         }
 
-        .forgot-password:hover {
-            text-decoration: underline;
+        .header p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
         }
 
-        /* Botões */
-        .btn {
+        .badge {
             display: inline-block;
-            padding: 12px 30px;
-            border-radius: 5px;
+            background: rgba(207,175,78,0.2);
+            color: var(--dourado);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            border: 1px solid var(--dourado);
+        }
+
+        .body {
+            padding: 2.5rem;
+        }
+
+        .form-grupo {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-grupo label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--azul-escuro);
+        }
+
+        .form-grupo input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--cinza);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-grupo input:focus {
+            outline: none;
+            border-color: var(--dourado);
+            box-shadow: 0 0 0 4px rgba(207,175,78,0.1);
+        }
+
+        .form-grupo input.erro {
+            border-color: var(--erro);
+        }
+
+        .mensagem-erro {
+            color: var(--erro);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .mensagem-erro.mostrar {
+            display: block;
+        }
+
+        .termos {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .termos input {
+            width: auto;
+        }
+
+        .termos label {
+            color: var(--preto);
+            font-weight: normal;
+        }
+
+        .termos a {
+            color: var(--dourado);
             text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
             border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
             cursor: pointer;
+            transition: all 0.3s;
         }
 
         .btn-primary {
-            background-color: #2563EB;
-            color: white;
-            width: 100%;
+            background: var(--dourado);
+            color: var(--azul-escuro);
         }
 
         .btn-primary:hover {
-            background-color: #1e4bb3;
+            background: var(--dourado-claro);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(207,175,78,0.3);
         }
 
-        /* Link para registo */
-        .register-link {
+        .loading {
+            display: none;
             text-align: center;
-            margin-top: 20px;
-            color: #666;
+            margin-top: 1rem;
+            color: var(--dourado);
         }
 
-        .register-link a {
-            color: #2563EB;
+        .loading.mostrar {
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--cinza);
+        }
+
+        .footer a {
+            color: var(--dourado);
             text-decoration: none;
+            font-weight: 600;
+        }
+
+        .beneficios {
+            background: #F5F7FA;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .beneficios h4 {
+            color: var(--azul-escuro);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .beneficios-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .beneficio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            color: var(--preto);
+        }
+
+        .beneficio-item span {
+            color: var(--dourado);
             font-weight: bold;
         }
 
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        footer a {
-            color: #2563EB;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
+        @media (max-width: 480px) {
+            .header { padding: 2rem 1.5rem; }
+            .header h1 { font-size: 2rem; }
+            .body { padding: 1.5rem; }
+            .beneficios-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Header com link para voltar à página inicial -->
-    <header>
-        <a href="index.html">Intelecta</a>
-    </header>
+    <div class="registo-container">
+        <div class="header">
+            <h1>INTELECTA <span>🇲🇿</span></h1>
+            <p>Junta-te à comunidade académica moçambicana</p>
+            <div class="badge">🎓 100% gratuito • Sem anúncios</div>
+        </div>
 
-    <!-- Formulário de login -->
-    <div class="container">
-        <div class="form-card">
-            <h2>Entrar na Intelecta</h2>
-            
-            <form action="feed.html" method="GET">
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+        <div class="body">
+            <!-- Formulário único: criar conta = login -->
+            <form id="formRegisto" onsubmit="return false;">
+                <div class="form-grupo">
+                    <label>Nome completo</label>
+                    <input type="text" id="nome" placeholder="Como aparece nos documentos" required>
+                    <div class="mensagem-erro" id="erroNome">Nome é obrigatório</div>
                 </div>
 
-                <div class="form-group">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                <div class="form-grupo">
+                    <label>Email académico</label>
+                    <input type="email" id="email" placeholder="exemplo@universidade.ac.mz" required>
+                    <div class="mensagem-erro" id="erroEmail">Email inválido</div>
                 </div>
 
-                <div class="form-options">
-                    <label class="remember">
-                        <input type="checkbox" name="remember"> Lembrar-me
-                    </label>
-                    <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                <div class="form-grupo">
+                    <label>Palavra-passe</label>
+                    <input type="password" id="senha" placeholder="Mínimo 6 caracteres" required>
+                    <div class="mensagem-erro" id="erroSenha">Mínimo 6 caracteres</div>
                 </div>
-                <a href="criar-perfil.html" 
-                <button type="submit" class="btn btn-primary">Entrar</button>
+
+                <div class="termos">
+                    <input type="checkbox" id="termos" required>
+                    <label for="termos">Li e aceito os <a href="#">Termos e Condições</a></label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" onclick="registar()">
+                    🚀 Criar conta e entrar
+                </button>
+
+                <div class="loading" id="loading">
+                    ⏳ A criar tua conta...
+                </div>
+
+                <div class="footer">
+                    <p>Já tens conta? <a href="#" onclick="fazerLoginExistente()">Entrar</a></p>
+                </div>
             </form>
 
-            <div class="register-link">
-                Não tens conta? <a href="register.html">Criar conta</a>
+            <!-- Login rápido para quem já tem conta (opcional) -->
+            <div id="loginRapido" style="display: none;">
+                <h3 style="margin: 2rem 0 1rem; text-align: center;">Ou entra na tua conta</h3>
+                <div class="form-grupo">
+                    <input type="email" id="loginEmail" placeholder="Teu email">
+                </div>
+                <div class="form-grupo">
+                    <input type="password" id="loginSenha" placeholder="Tua palavra-passe">
+                </div>
+                <button class="btn btn-primary" onclick="login()">Entrar</button>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="#" onclick="mostrarRegisto()">← Voltar ao registo</a>
+                </div>
+            </div>
+
+            <div class="beneficios">
+                <h4>✨ Ao criar conta:</h4>
+                <div class="beneficios-grid">
+                    <div class="beneficio-item"><span>✓</span> Acesso a grupos de estudo</div>
+                    <div class="beneficio-item"><span>✓</span> Networking académico</div>
+                    <div class="beneficio-item"><span>✓</span> Partilha de conhecimento</div>
+                    <div class="beneficio-item"><span>✓</span> Recursos exclusivos</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer simples -->
-    <footer>
-        <p>Intelecta © 2024</p>
-        <p>
-            <a href="#">Sobre</a> |
-            <a href="#">Termos</a> |
-            <a href="#">Privacidade</a>
-        </p>
-    </footer>
-    
-    <!-- Biblioteca Supabase (via CDN) -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ==================== BASE DE DADOS ====================
+        // Inicializar base de dados se não existir
+        if (!localStorage.getItem('utilizadores')) {
+            localStorage.setItem('utilizadores', JSON.stringify([]));
+        }
 
-<script>
-  // INICIALIZAÇÃO DO SUPABASE
-  const supabaseUrl = 'https://kvcposzbunjnhxtrgczc.supabase.co'  // COLOCA A TUA URL AQUI
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2Y3Bvc3pidW5qbmh4dHJjZ3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MzkzODgsImV4cCI6MjA4NzMxNTM4OH0.Bsv7hL3jXdIPgux5pVXO9diNjAogIS8az5oPy9SUXio'                   // COLOCA A TUA CHAVE AQUI
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey)
-  
-  console.log('Supabase carregado com sucesso!')
-</script>
+        // ==================== REGISTO ====================
+        function registar() {
+            // Limpar erros anteriores
+            limparErros();
+
+            // Recolher dados
+            const nome = document.getElementById('nome').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value;
+            const termos = document.getElementById('termos').checked;
+
+            // Validações
+            let valido = true;
+
+            if (nome === '') {
+                mostrarErro('erroNome', 'nome');
+                valido = false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                mostrarErro('erroEmail', 'email');
+                valido = false;
+            }
+
+            if (senha.length < 6) {
+                mostrarErro('erroSenha', 'senha');
+                valido = false;
+            }
+
+            if (!termos) {
+                alert('Precisas aceitar os termos para continuar');
+                valido = false;
+            }
+
+            if (!valido) return;
+
+            // Mostrar loading
+            document.getElementById('loading').classList.add('mostrar');
+
+            // Simular processamento
+            setTimeout(() => {
+                // Verificar se email já existe
+                const utilizadores = JSON.parse(localStorage.getItem('utilizadores'));
+                const existe = utilizadores.find(u => u.email === email);
+
+                if (existe) {
+                    alert('Este email já está registado! Faz login em vez disso.');
+                    document.getElementById('loading').classList.remove('mostrar');
+                    mostrarLogin();
+                    return;
+                }
+
+                // Criar novo utilizador
+                const novoUtilizador = {
+                    id: Date.now(),
+                    nome: nome,
+                    email: email,
+                    password: senha, // Numa app real, isto seria encriptado
+                    primeiraVez: true, // MARCADO COMO PRIMEIRA VEZ
+                    perfilCompleto: false,
+                    dataRegisto: new Date().toISOString()
+                };
+
+                // Guardar na base de dados
+                utilizadores.push(novoUtilizador);
+                localStorage.setItem('utilizadores', JSON.stringify(utilizadores));
+
+                // Criar sessão (já logado)
+                const sessao = {
+                    id: novoUtilizador.id,
+                    nome: novoUtilizador.nome,
+                    email: novoUtilizador.email,
+                    primeiraVez: true,
+                    logado: true
+                };
+                localStorage.setItem('sessao', JSON.stringify(sessao));
+
+                // Redirecionar para criar perfil (porque é primeira vez)
+                window.location.href = 'criar-perfil.html';
+            }, 1500);
+        }
+
+        // ==================== LOGIN ====================
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const senha = document.getElementById('loginSenha').value;
+
+            if (!email || !senha) {
+                alert('Preenche email e palavra-passe');
+                return;
+            }
+
+            document.getElementById('loading').classList.add('mostrar');
+
+            setTimeout(() => {
+                const utilizadores = JSON.parse(localStorage.getItem('utilizadores'));
+                const utilizador = utilizadores.find(u => u.email === email && u.password === senha);
+
+                if (!utilizador) {
+                    alert('Email ou palavra-passe incorretos');
+                    document.getElementById('loading').classList.remove('mostrar');
+                    return;
+                }
+
+                // Criar sessão
+                const sessao = {
+                    id: utilizador.id,
+                    nome: utilizador.nome,
+                    email: utilizador.email,
+                    primeiraVez: utilizador.primeiraVez || false,
+                    perfilCompleto: utilizador.perfilCompleto || false,
+                    logado: true
+                };
+                localStorage.setItem('sessao', JSON.stringify(sessao));
+
+                // Redirecionar conforme situação
+                if (!utilizador.perfilCompleto) {
+                    window.location.href = 'criar-perfil.html';
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
+            }, 1000);
+        }
+
+        // ==================== UTILITÁRIOS ====================
+        function mostrarErro(erroId, inputId) {
+            document.getElementById(erroId).classList.add('mostrar');
+            document.getElementById(inputId).classList.add('erro');
+        }
+
+        function limparErros() {
+            document.querySelectorAll('.mensagem-erro').forEach(e => e.classList.remove('mostrar'));
+            document.querySelectorAll('input').forEach(i => i.classList.remove('erro'));
+        }
+
+        // Alternar entre registo e login
+        function fazerLoginExistente() {
+            document.getElementById('formRegisto').style.display = 'none';
+            document.getElementById('loginRapido').style.display = 'block';
+        }
+
+        function mostrarRegisto() {
+            document.getElementById('formRegisto').style.display = 'block';
+            document.getElementById('loginRapido').style.display = 'none';
+        }
+
+        // Remover erros ao digitar
+        document.getElementById('nome').addEventListener('input', function() {
+            this.classList.remove('erro');
+            document.getElementById('erroNome').classList.remove('mostrar');
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+            this.classList.remove('erro');
+            document.getElementById('erroEmail').classList.remove('mostrar');
+        });
+
+        document.getElementById('senha').addEventListener('input', function() {
+            this.classList.remove('erro');
+            document.getElementById('erroSenha').classList.remove('mostrar');
+        });
+    </script>
 </body>
 </html>

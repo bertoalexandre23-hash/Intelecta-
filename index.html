@@ -1,253 +1,951 @@
 <!DOCTYPE html>
-<html lang="pt-MZ">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intelecta - Rede Social para Estudantes</title>
+    <title>Intelecta - Comunidade Académica Moçambicana</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            background-color: #f0f2f5;
-        }
-
-        /* Header simples só com o nome */
-        header {
-            background-color: #2563EB;
-            padding: 15px 20px;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        /* Container principal */
-        .container {
-            max-width: 1000px;
-            margin: 50px auto;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* Título principal */
-        h1 {
-            font-size: 48px;
-            color: #2563EB;
-            margin-bottom: 20px;
-        }
-
-        /* Subtítulo */
-        .subtitle {
-            font-size: 20px;
-            color: #333;
-            margin-bottom: 40px;
-            line-height: 1.5;
-        }
-
-        /* Botões */
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            margin: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .btn-primary {
-            background-color: #2563EB;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #1e4bb3;
-        }
-
-        .btn-outline {
-            background-color: white;
-            color: #2563EB;
-            border: 2px solid #2563EB;
-        }
-
-        .btn-outline:hover {
-            background-color: #2563EB;
-            color: white;
-        }
-
-        /* Seções */
-        .section {
-            background-color: white;
-            padding: 40px;
-            margin: 30px 0;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .section h2 {
-            color: #2563EB;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-
-        .section p {
-            color: #666;
-            margin-bottom: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #0A1929;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Passos */
-        .steps {
+        /* Cores da marca - conforme solicitado */
+        :root {
+            --azul-escuro: #0A1929;      /* Azul escuro principal */
+            --azul-medio: #1E2F4A;        /* Azul para variações */
+            --preto: #0F0F0F;              /* Preto suave */
+            --dourado: #CFAF4E;            /* Dourado principal */
+            --dourado-claro: #E5C87C;      /* Dourado para hovers */
+            --dourado-escuro: #B8962C;     /* Dourado para contrastes */
+            --branco: #FFFFFF;
+            --cinza-claro: #F5F7FA;
+            --cinza: #E0E4E9;
+            --cinza-escuro: #4A5568;
+        }
+
+        /* Tipografia */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            background: var(--azul-escuro);
+            padding: 1rem 0;
+            border-bottom: 3px solid var(--dourado);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .header-content {
             display: flex;
-            gap: 20px;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            color: var(--dourado);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            transition: color 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--dourado-claro);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: clamp(1rem, 3vw, 2.5rem);
+            align-items: center;
             flex-wrap: wrap;
         }
 
-        .step {
-            flex: 1;
-            min-width: 250px;
-            padding: 20px;
+        .nav-links a {
+            color: var(--branco);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
         }
 
-        .step .number {
-            background-color: #2563EB;
-            color: white;
-            width: 40px;
-            height: 40px;
+        .nav-links a:hover {
+            color: var(--dourado);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--dourado);
+            color: var(--dourado);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+        }
+
+        .btn-solid {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid var(--dourado);
+        }
+
+        .btn-solid:hover {
+            background: var(--dourado-claro);
+            border-color: var(--dourado-claro);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(207, 175, 78, 0.3);
+        }
+
+        /* Menu mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dourado);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--preto) 100%);
+            color: var(--branco);
+            padding: 4rem 0 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.05"><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%23CFAF4E" stroke-width="2"/><circle cx="50" cy="50" r="15" fill="none" stroke="%23CFAF4E" stroke-width="2"/><path d="M30,30 L70,70 M70,30 L30,70" stroke="%23CFAF4E" stroke-width="2"/></svg>') repeat;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(207, 175, 78, 0.15);
+            color: var(--dourado);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--dourado);
+            backdrop-filter: blur(5px);
+        }
+
+        .hero h1 span {
+            color: var(--dourado);
+            border-bottom: 4px solid var(--dourado);
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(255,255,255,0.8);
+            margin: 2rem 0;
+            max-width: 90%;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(207, 175, 78, 0.3);
+            min-width: 100px;
+        }
+
+        .stat-number {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 800;
+            color: var(--dourado);
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(207, 175, 78, 0.3);
+            border: 2px solid var(--dourado);
+        }
+
+        .btn-primary:hover {
+            background: var(--dourado-claro);
+            border-color: var(--dourado-claro);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(207, 175, 78, 0.4);
+        }
+
+        .hero-image {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(207, 175, 78, 0.3);
+            backdrop-filter: blur(10px);
+            width: 100%;
+        }
+
+        .feature-preview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .preview-item {
+            background: rgba(255,255,255,0.08);
+            padding: 1.5rem 1rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .preview-item:hover {
+            border-color: var(--dourado);
+            background: rgba(207, 175, 78, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .preview-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Missão Section */
+        .missao {
+            padding: 5rem 0;
+            background: var(--branco);
+        }
+
+        .missao-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .missao-card {
+            background: var(--cinza-claro);
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border-bottom: 4px solid transparent;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .missao-card:hover {
+            border-bottom-color: var(--dourado);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(207, 175, 78, 0.15);
+        }
+
+        .missao-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--azul-escuro);
+        }
+
+        .missao-card h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 1rem;
+        }
+
+        .missao-card p {
+            color: var(--cinza-escuro);
+            font-size: 0.95rem;
+        }
+
+        /* Funcionalidades */
+        .funcionalidades {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--cinza-claro) 0%, var(--branco) 100%);
+        }
+
+        .func-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .func-card {
+            background: var(--branco);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 1.5rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(207, 175, 78, 0.1);
+        }
+
+        .func-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(207, 175, 78, 0.15);
+            border-color: var(--dourado);
+        }
+
+        .func-icon {
+            background: var(--azul-escuro);
+            color: var(--dourado);
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .func-card:hover .func-icon {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+        }
+
+        .func-content h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 0.5rem;
+        }
+
+        .func-content p {
+            color: var(--cinza-escuro);
+            font-size: 0.95rem;
+        }
+
+        /* Sobre o Fundador */
+        .fundador {
+            padding: 5rem 0;
+            background: var(--azul-escuro);
+            color: var(--branco);
+        }
+
+        .fundador-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .fundador-imagem {
+            background: var(--dourado);
+            width: min(300px, 100%);
+            height: min(300px, 100%);
+            aspect-ratio: 1;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 15px;
-            font-weight: bold;
+            font-size: 5rem;
+            color: var(--azul-escuro);
+            border: 5px solid var(--dourado);
+            box-shadow: 0 20px 40px rgba(207, 175, 78, 0.3);
+            margin: 0 auto;
         }
 
-        /* CTA final */
-        .cta {
-            background-color: #2563EB;
-            color: white;
+        .fundador-texto h2 {
+            color: var(--dourado);
+            margin-bottom: 1rem;
+        }
+
+        .fundador-nome {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--branco);
+        }
+
+        .fundador-titulo {
+            color: var(--dourado);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .fundador-descricao {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* CTA Final */
+        .cta-final {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--dourado) 0%, var(--dourado-escuro) 100%);
             text-align: center;
-            padding: 50px;
-            border-radius: 10px;
+            color: var(--azul-escuro);
         }
 
-        .cta h2 {
-            color: white;
+        .cta-final h2 {
+            color: var(--azul-escuro);
         }
 
-        .cta .btn-white {
-            background-color: white;
-            color: #2563EB;
+        .cta-final p {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            margin: 2rem 0;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--azul-escuro);
+            opacity: 0.9;
+        }
+
+        .btn-cta {
+            background: var(--azul-escuro);
+            color: var(--dourado);
             border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border: 2px solid var(--azul-escuro);
         }
 
-        .cta .btn-white:hover {
-            background-color: #f0f0f0;
+        .btn-cta:hover {
+            background: transparent;
+            color: var(--azul-escuro);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
 
         /* Footer */
         footer {
+            background: var(--preto);
+            color: var(--branco);
+            padding: 3rem 0;
             text-align: center;
-            padding: 30px;
-            color: #666;
-            font-size: 14px;
+            border-top: 3px solid var(--dourado);
         }
 
-        footer a {
-            color: #2563EB;
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--dourado);
             text-decoration: none;
-            margin: 0 10px;
+            transition: color 0.3s;
+            font-size: 1rem;
         }
 
-        footer a:hover {
+        .footer-links a:hover {
+            color: var(--dourado-claro);
             text-decoration: underline;
+        }
+
+        /* CTA Oculto para Criadores */
+        .criadores-cta {
+            margin-top: 2rem;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .criadores-cta:hover {
+            opacity: 1;
+        }
+
+        .criadores-cta a {
+            color: var(--dourado);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--dourado);
+        }
+
+        .criadores-cta a:hover {
+            border-bottom: 1px solid var(--dourado);
+        }
+
+        /* Responsivo */
+        @media (max-width: 1024px) {
+            .hero-content {
+                gap: 2rem;
+            }
+            
+            .missao-grid {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero p {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .missao-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .fundador-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .func-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 1rem 0;
+            }
+            
+            .nav-links.show {
+                display: flex;
+            }
+            
+            .nav-links a, .nav-links .btn-outline, .nav-links .btn-solid {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .header-content {
+                position: relative;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-item {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .feature-preview {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .missao-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .func-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .func-icon {
+                margin: 0 auto;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .btn-primary, .btn-cta {
+                width: 100%;
+                padding: 1rem;
+            }
+        }
+
+        /* Animações */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
         }
     </style>
 </head>
 <body>
-    <!-- Header só com o nome -->
     <header>
-        Intelecta
+        <div class="container header-content">
+            <a href="/" class="logo">INTELECTA</a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="#missao">Missão</a>
+                <a href="#funcionalidades">Funcionalidades</a>
+                <a href="#fundador">Sobre</a>
+                <a href="login.html" class="btn-outline">Entrar</a>
+                <a href="login.html?tab=registo" class="btn-solid">Registar</a>
+            </div>
+        </div>
     </header>
 
-    <!-- Conteúdo principal -->
-    <div class="container">
-        <h1>Conecta-te com estudantes de Moçambique</h1>
-        <p class="subtitle">A rede social feita por e para estudantes moçambicanos. Partilha conhecimento, encontra grupos de estudo e constrói o teu futuro.</p>
-        
-        <!-- Botões de ação -->
-        <div>
-            <a href="register.html" class="btn btn-primary">Criar Conta</a>
-            <a href="login.html" class="btn btn-outline">Entrar</a>
-        </div>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <div class="fade-in-up">
+                    <div class="hero-badge">🇲🇿 100% Gratuita para Estudantes Moçambicanos</div>
+                    <h1>O futuro da educação em <span>Moçambique</span> começa aqui.</h1>
+                    <p>Partilhe conhecimento, conecte-se com outros estudantes e cresça academicamente. Sem custos, sem anúncios — apenas educação.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Estudantes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">23</div>
+                            <div class="stat-label">Comunidades</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Universidades</div>
+                        </div>
+                    </div>
 
-        <!-- Como funciona -->
-        <div class="section">
-            <h2>Como funciona</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="number">1</div>
-                    <h3>Cria o teu perfil</h3>
-                    <p>Regista-te e cria o teu perfil estudantil com universidade e curso.</p>
+                    <button class="btn-primary" onclick="window.location.href='login.html?tab=registo'">
+                        Criar Conta Gratuita →
+                    </button>
                 </div>
-                <div class="step">
-                    <div class="number">2</div>
-                    <h3>Conecta-te</h3>
-                    <p>Encontra colegas do mesmo curso ou universidade.</p>
-                </div>
-                <div class="step">
-                    <div class="number">3</div>
-                    <h3>Partilha</h3>
-                    <p>Publica dúvidas, partilha apontamentos e aprende em grupo.</p>
+
+                <div class="hero-image fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="feature-preview">
+                        <div class="preview-item">
+                            <div class="preview-icon">📚</div>
+                            <div>Grupos de Estudo</div>
+                        </div>
+                        <div class="preview-item">
+                            <div class="preview-icon">💬</div>
+                            <div>Chat em tempo real</div>
+                        </div>
+                        <div class="preview-item">
+                            <div class="preview-icon">❓</div>
+                            <div>Perguntas & Respostas</div>
+                        </div>
+                        <div class="preview-item">
+                            <div class="preview-icon">📹</div>
+                            <div>Chamadas de vídeo</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 2rem; text-align: center; color: var(--dourado); font-weight: 500;">✨ Tudo gratuito, sempre</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Vantagens -->
-        <div class="section">
-            <h2>Porquê usar a Intelecta?</h2>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
-                <div>
-                    <h3>🎓 Foco Académico</h3>
-                    <p>Rede social exclusiva para estudantes, sem distrações.</p>
-                </div>
-                <div>
-                    <h3>📍 Feito em Moçambique</h3>
-                    <p>Pensado para a realidade dos estudantes moçambicanos.</p>
-                </div>
-                <div>
-                    <h3>👥 Grupos de Estudo</h3>
-                    <p>Cria grupos por disciplina, curso ou universidade.</p>
-                </div>
-                <div>
-                    <h3>💼 Oportunidades</h3>
-                    <p>Informações sobre estágios, bolsas e eventos.</p>
+        <!-- Missão Section -->
+        <section id="missao" class="missao">
+            <div class="container">
+                <h2 style="text-align: center;">A Nossa <span style="color: var(--dourado);">Missão</span></h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto; color: var(--cinza-escuro);">
+                    A Intelecta nasceu da necessidade de criar um espaço digital onde estudantes moçambicanos possam partilhar conhecimento, orientar-se mutuamente e construir uma comunidade académica forte e unida. Acreditamos que a educação é a chave para o desenvolvimento do nosso país.
+                </p>
+
+                <div class="missao-grid">
+                    <div class="missao-card">
+                        <div class="missao-icon">🎓</div>
+                        <h3>Educação Acessível</h3>
+                        <p>100% gratuita, sem anúncios, sem monetização</p>
+                    </div>
+                    <div class="missao-card">
+                        <div class="missao-icon">🤝</div>
+                        <h3>Comunidade Nacional</h3>
+                        <p>Conectando estudantes de todo o Moçambique</p>
+                    </div>
+                    <div class="missao-card">
+                        <div class="missao-icon">💝</div>
+                        <h3>Sem Fins Lucrativos</h3>
+                        <p>Uma iniciativa pura para fortalecer a educação</p>
+                    </div>
+                    <div class="missao-card">
+                        <div class="missao-icon">🔄</div>
+                        <h3>Partilha de Conhecimento</h3>
+                        <p>Estudantes experientes orientam iniciantes</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- CTA final (padronizado com os botões) -->
-        <div class="cta">
-            <h2>Pronto para começar?</h2>
-            <p style="color: white; margin-bottom: 20px;">Junta-te a estudantes moçambicanos na Intelecta.</p>
-            <a href="register.html" class="btn btn-white">Criar Conta Agora</a>
-        </div>
-    </div>
+        <!-- Funcionalidades -->
+        <section id="funcionalidades" class="funcionalidades">
+            <div class="container">
+                <h2 style="text-align: center;">O que podes fazer na <span style="color: var(--dourado);">Intelecta</span></h2>
+                <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem; color: var(--cinza-escuro);">
+                    Tudo o que precisas para crescer academicamente, num só lugar.
+                </p>
 
-    <!-- Footer -->
+                <div class="func-grid">
+                    <div class="func-card">
+                        <div class="func-icon">❓</div>
+                        <div class="func-content">
+                            <h3>Perguntas & Respostas</h3>
+                            <p>Publique perguntas, partilhe respostas e artigos académicos. Organizado por curso e nível de ensino.</p>
+                        </div>
+                    </div>
+                    <div class="func-card">
+                        <div class="func-icon">👥</div>
+                        <div class="func-content">
+                            <h3>Grupos de Estudo</h3>
+                            <p>Crie ou junte-se a grupos públicos e privados. Chat interno, moderação e foco académico.</p>
+                        </div>
+                    </div>
+                    <div class="func-card">
+                        <div class="func-icon">💬</div>
+                        <div class="func-content">
+                            <h3>Chat em Tempo Real</h3>
+                            <p>Converse com colegas individualmente ou em grupo. Texto, emojis e imagens.</p>
+                        </div>
+                    </div>
+                    <div class="func-card">
+                        <div class="func-icon">📹</div>
+                        <div class="func-content">
+                            <h3>Chamadas de Voz e Vídeo</h3>
+                            <p>Chamadas integradas estilo Google Meet. Perfeito para sessões de estudo à distância.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sobre o Fundador -->
+        <section id="fundador" class="fundador">
+            <div class="container fundador-content">
+                <div class="fundador-imagem">
+                    👨‍🎓
+                </div>
+                <div class="fundador-texto">
+                    <h2>Sobre o Fundador</h2>
+                    <div class="fundador-nome">Teruma Rodrigues Teruma</div>
+                    <div class="fundador-titulo">Estudante da 12ª Classe • Fundador da Intelecta</div>
+                    <p class="fundador-descricao">
+                        Movido pela convicção de que a educação transforma vidas, Teruma criou a Intelecta como uma iniciativa sem fins lucrativos para fortalecer a educação em Moçambique. O objectivo é simples: dar aos estudantes moçambicanos uma ferramenta gratuita e poderosa para aprender, partilhar e crescer juntos.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Final -->
+        <section class="cta-final">
+            <div class="container">
+                <h2>Junta-te à comunidade Intelecta</h2>
+                <p>Faz parte da maior plataforma estudantil de Moçambique. É grátis, para sempre.</p>
+                <button class="btn-cta" onclick="window.location.href='login.html?tab=registo'">
+                    Criar Conta Gratuita
+                </button>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        <p>Intelecta © 2024 - Rede Social para Estudantes de Moçambique</p>
-        <p>
-            <a href="#">Sobre</a> |
-            <a href="#">Termos</a> |
-            <a href="#">Privacidade</a> |
-            <a href="#">Contacto</a>
-        </p>
+        <div class="container">
+            <div class="logo" style="color: var(--dourado); font-size: 2rem; margin-bottom: 1rem;">INTELECTA</div>
+            <div class="footer-links">
+                <a href="#missao">Missão</a>
+                <a href="#funcionalidades">Funcionalidades</a>
+                <a href="#fundador">Sobre</a>
+                <a href="#">Termos</a>
+                <a href="#">Privacidade</a>
+            </div>
+            <p>© 2026 Intelecta - Conectando estudantes moçambicanos</p>
+            <p style="margin-top: 1rem; color: var(--dourado);">🇲🇿 Feito em Moçambique, para Moçambique</p>
+            
+            <!-- CTA Oculto para Criadores -->
+            <div class="criadores-cta">
+                <a href="#" onclick="mostrarCriadores(event)">🔧 Conheça os criadores da Intelecta</a>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        // Menu mobile
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+        // Fechar menu ao clicar num link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('show');
+            });
+        });
+
+        // Smooth scroll para os links do menu
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animação dos números
+        function animateNumbers() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const finalValue = parseInt(stat.innerText.replace('+', ''));
+                let current = 0;
+                const increment = finalValue / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= finalValue) {
+                        stat.innerText = finalValue + '+';
+                        clearInterval(timer);
+                    } else {
+                        stat.innerText = Math.floor(current) + '+';
+                    }
+                }, 20);
+            });
+        }
+
+        // Observer para animar números quando visíveis
+        const heroSection = document.querySelector('.hero');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateNumbers();
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(heroSection);
+
+        // Função para mostrar os criadores (pode ser personalizada)
+        function mostrarCriadores(event) {
+            event.preventDefault();
+            alert('👥 Criadores da Intelecta\n\n' +
+                  'Fundador: Teruma Rodrigues Teruma\n' +
+                  'Equipa: [Adicionar nomes da equipa]\n\n' +
+                  'Uma iniciativa moçambicana para fortalecer a educação.');
+        }
+
+        // Fechar menu mobile ao redimensionar para desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>
