@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Atualizações - Intelecta</title>
     <style>
         * {
@@ -14,6 +14,7 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #F5F7FA;
+            overflow-x: hidden;
         }
 
         :root {
@@ -29,27 +30,30 @@
             --cinza-escuro: #4A5568;
         }
 
-        /* HEADER COMPACTO */
+        /* HEADER COMPACTO COM MENU HAMBÚRGUER */
         header {
             background: var(--azul-escuro);
             padding: 0.6rem 0;
             border-bottom: 2px solid var(--dourado);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            width: 100%;
         }
 
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 0 2rem;
+            width: 100%;
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 50px; /* Altura fixa para header compacto */
+            height: 50px;
+            position: relative;
         }
 
         .logo {
@@ -58,8 +62,46 @@
             font-weight: 800;
             text-decoration: none;
             letter-spacing: -0.02em;
+            z-index: 1001;
         }
 
+        /* Menu Hambúrguer - CORRIGIDO */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 0;
+            position: relative;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background: var(--dourado);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .hamburger.ativo span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+
+        .hamburger.ativo span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.ativo span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+        }
+
+        /* Navegação Desktop */
         .nav-links {
             display: flex;
             align-items: center;
@@ -73,6 +115,7 @@
             font-size: 0.95rem;
             transition: color 0.3s;
             padding: 0.25rem 0;
+            white-space: nowrap;
         }
 
         .nav-links a:hover {
@@ -97,6 +140,7 @@
             color: var(--dourado);
             font-weight: 600;
             font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         .btn-sair {
@@ -108,6 +152,7 @@
             cursor: pointer;
             font-size: 0.8rem;
             transition: all 0.3s;
+            white-space: nowrap;
         }
 
         .btn-sair:hover {
@@ -115,24 +160,36 @@
             color: var(--azul-escuro);
         }
 
-        /* Mobile menu */
-        .mobile-menu-btn {
+        /* Overlay para mobile */
+        .overlay {
             display: none;
-            background: none;
-            border: none;
-            color: var(--dourado);
-            font-size: 1.5rem;
-            cursor: pointer;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
-        /* Main */
+        .overlay.ativo {
+            display: block;
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Main - ESPAÇO ADICIONADO ACIMA */
         main {
-            padding: 2rem 0;
+            padding: 3rem 0 2rem 0; /* Aumentado padding-top para 3rem */
+            min-height: calc(100vh - 130px);
         }
 
         /* Cabeçalho da página */
         .page-header {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem; /* Aumentado margem */
             text-align: center;
         }
 
@@ -149,9 +206,11 @@
         .page-header p {
             color: var(--cinza-escuro);
             font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Banner do Discord COM IMAGEM */
+        /* Banner do Discord */
         .discord-banner {
             background: linear-gradient(135deg, var(--azul-escuro), var(--preto));
             border-radius: 20px;
@@ -173,7 +232,6 @@
             flex-wrap: wrap;
         }
 
-        /* Container para a LOGO DO DISCORD (personalizável) */
         .discord-logo-container {
             width: 60px;
             height: 60px;
@@ -388,6 +446,7 @@
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
+            display: inline-block;
         }
 
         .btn-post:hover {
@@ -395,7 +454,7 @@
             color: var(--azul-escuro);
         }
 
-        /* Sidebar compacta */
+        /* Sidebar */
         .sidebar-card {
             background: var(--branco);
             border-radius: 15px;
@@ -448,6 +507,33 @@
             font-weight: 600;
             font-size: 0.85rem;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-discord-side:hover {
+            background: #4752C4;
+        }
+
+        /* Eventos */
+        .evento-item {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--cinza);
+            font-size: 0.9rem;
+        }
+
+        .evento-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .evento-data {
+            font-weight: 700;
+            color: var(--dourado);
+            min-width: 45px;
         }
 
         /* Footer */
@@ -456,46 +542,28 @@
             color: var(--branco);
             text-align: center;
             padding: 1.5rem 0;
-            margin-top: 2rem;
             border-top: 2px solid var(--dourado);
             font-size: 0.9rem;
         }
 
-        /* Responsivo */
-        @media (max-width: 900px) {
+        /* ========== RESPONSIVIDADE ========== */
+        @media (max-width: 1024px) {
             .layout {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 250px;
+                gap: 1rem;
             }
-            
+        }
+
+        @media (max-width: 900px) {
             .discord-banner {
                 flex-direction: column;
                 text-align: center;
+                padding: 1.5rem;
             }
             
             .discord-info {
                 justify-content: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                height: auto;
-                flex-wrap: wrap;
-                padding: 0.5rem 0;
-            }
-            
-            .nav-links {
-                order: 3;
                 width: 100%;
-                justify-content: center;
-                gap: 1rem;
-                margin-top: 0.5rem;
-            }
-            
-            .user-info {
-                margin-left: 0;
-                padding-left: 0;
-                border-left: none;
             }
             
             .discord-stats {
@@ -503,14 +571,107 @@
                 justify-content: center;
             }
             
-            .page-header h1 {
-                font-size: 2rem;
+            .btn-discord {
+                width: 100%;
+                justify-content: center;
             }
         }
 
-        @media (max-width: 480px) {
-            .container {
+        @media (max-width: 850px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: 2;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .sidebar-card {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Ativar menu hambúrguer - CORRIGIDO */
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -280px;
+                width: 280px;
+                height: 100vh;
+                background: var(--azul-escuro);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                padding: 80px 2rem 2rem;
+                transition: right 0.3s ease;
+                z-index: 999;
+                border-left: 2px solid var(--dourado);
+                gap: 1.2rem;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+            
+            .nav-links.ativo {
+                right: 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.1rem;
+                width: 100%;
+                padding: 0.5rem 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .user-info {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                width: 100%;
+                gap: 1rem;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(255,255,255,0.2);
+            }
+            
+            .user-nome {
+                font-size: 1rem;
+            }
+            
+            .btn-sair {
+                width: 100%;
+                text-align: center;
+            }
+            
+            main {
+                padding: 2rem 0 1.5rem 0; /* Ajustado para mobile */
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
                 padding: 0 1rem;
+            }
+            
+            .container {
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .sidebar {
+                grid-template-columns: 1fr;
             }
             
             .post-header {
@@ -520,16 +681,110 @@
             .post-badge {
                 margin-left: 0;
             }
+            
+            .discord-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .discord-stats {
+                gap: 1rem;
+            }
+            
+            .stat {
+                min-width: 50px;
+            }
+            
+            main {
+                padding: 1.5rem 0 1rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .post-content, .post-header, .post-footer {
+                padding: 1rem;
+            }
+            
+            .post-meta {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .post-stats {
+                gap: 0.8rem;
+            }
+            
+            .discord-banner {
+                padding: 1.2rem;
+            }
+            
+            .discord-logo-container {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .btn-discord {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .page-header {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .hamburger {
+                width: 25px;
+                height: 18px;
+            }
+            
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .stat-number {
+                font-size: 1.1rem;
+            }
+            
+            .stat-label {
+                font-size: 0.6rem;
+            }
+            
+            .nav-links {
+                width: 250px;
+                right: -250px;
+                padding: 70px 1.5rem 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER COMPACTO -->
+
+    <!-- HEADER COM MENU HAMBÚRGUER -->
     <header>
         <div class="container header-content">
             <a href="dashboard.html" class="logo">INTELECTA</a>
             
-            <nav class="nav-links">
+            <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav class="nav-links" id="navLinks">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="grupos.html">Grupos</a>
                 <a href="atualizacoes.html" class="ativo">Atualizações</a>
@@ -543,20 +798,23 @@
         </div>
     </header>
 
+    <!-- Overlay para mobile -->
+    <div class="overlay" id="overlay"></div>
+
     <main class="container">
-        <!-- Cabeçalho da página -->
+        <!-- Cabeçalho da página - AGORA COM ESPAÇO DO HEADER -->
+        <br>
         <div class="page-header">
             <h1>Atualizações <span>Intelecta</span></h1>
             <p>Fica por dentro das novidades da plataforma e comunidade</p>
         </div>
 
-        <!-- Banner Discord com imagem personalizável -->
+        <!-- Banner Discord -->
         <div class="discord-banner">
             <div class="discord-info">
-                <!-- LOGO PERSONALIZÁVEL: Troca o src pelo caminho da tua imagem -->
                 <div class="discord-logo-container">
+                    <!-- COLOCA AQUI O CAMINHO DA TUA LOGO -->
                     <img src="/assets/images/discord-logo.png" alt="Discord" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%235865F2%22/><text x=%2220%22 y=%2270%22 fill=%22white%22 font-size=%2270%22>D</text></svg>'">
-                    <!-- Fallback: se a imagem não existir, mostra um "D" azul -->
                 </div>
                 <div class="discord-text">
                     <h2>Comunidade Discord</h2>
@@ -570,11 +828,11 @@
                 </div>
                 <div class="stat">
                     <div class="stat-number">15</div>
-                    <div class="stat-label">CANAL</div>
+                    <div class="stat-label">CANAIS</div>
                 </div>
             </div>
             <button class="btn-discord" onclick="window.open('https://discord.gg/intelecta', '_blank')">
-                <span>🎮</span> Entrar
+                Entrar no Discord
             </button>
         </div>
 
@@ -582,51 +840,7 @@
         <div class="layout">
             <!-- Feed de atualizações -->
             <div class="feed" id="feedAtualizacoes">
-                <!-- 
-                    ====================================================
-                    PUBLICAÇÕES - COMENTADAS PARA ATIVAÇÃO RÁPIDA
-                    ====================================================
-                -->
-
-                <!-- PUBLICAÇÃO 1 - LANÇAMENTO -->
-                <div class="post destaque">
-                    <div class="post-header">
-                        <div class="post-author-img">TR</div>
-                        <div class="post-author-info">
-                            <h3>Teruma Rodrigues</h3>
-                            <div class="post-meta">
-                                <span>📅 24 Fev 2026</span>
-                                <span>👤 Fundador</span>
-                            </div>
-                        </div>
-                        <div class="post-badge">🚀 NOVO</div>
-                    </div>
-                    <div class="post-content">
-                        <h2 class="post-title">
-                            Lançamento Oficial da Intelecta 🎉
-                        </h2>
-                        <p class="post-text">
-                            É com enorme satisfação que anunciamos o lançamento oficial da Intelecta - a primeira plataforma 
-                            moçambicana dedicada exclusivamente a conectar estudantes académicos!<br><br>
-                            A nossa missão é simples: criar um espaço onde possam partilhar conhecimento, formar grupos de estudo 
-                            e construir networking académico de qualidade. Tudo 100% gratuito.
-                        </p>
-                        <div class="post-tags">
-                            <span class="tag">#Lançamento</span>
-                            <span class="tag">#Intelecta</span>
-                            <span class="tag">#Educação</span>
-                        </div>
-                    </div>
-                    <div class="post-footer">
-                        <div class="post-stats">
-                            <span class="stat-item">❤️ 234</span>
-                            <span class="stat-item">💬 45</span>
-                        </div>
-                        <a href="#" class="btn-post">Ler mais</a>
-                    </div>
-                </div>
-
-                <!-- PUBLICAÇÃO 2 - NOVOS GRUPOS -->
+                <!-- PUBLICAÇÃO 1 - NOVOS GRUPOS -->
                 <div class="post">
                     <div class="post-header">
                         <div class="post-author-img">📚</div>
@@ -644,11 +858,13 @@
                         </h2>
                         <p class="post-text">
                             Adicionámos 5 novos grupos de estudo à plataforma! Agora tens ainda mais opções para encontrar 
-                            o teu grupo ideal: Engenharia Civil, Direito Constitucional, Programação Web, Matemática Pura e Economia.
+                            o teu grupo ideal: Engenharia Civil, Direito Constitucional, Programação Web, Matemática Pura e Economia.<br><br>
+                            Explora agora na secção "Grupos" e junta-te ao que mais se adequa ao teu curso!
                         </p>
                         <div class="post-tags">
                             <span class="tag">#NovosGrupos</span>
                             <span class="tag">#Estudo</span>
+                            <span class="tag">#Comunidade</span>
                         </div>
                     </div>
                     <div class="post-footer">
@@ -659,14 +875,92 @@
                         <a href="grupos.html" class="btn-post">Ver grupos</a>
                     </div>
                 </div>
+
+                <!-- PUBLICAÇÃO 2 - EVENTO DISCORD -->
+                <div class="post destaque">
+                    <div class="post-header">
+                        <div class="post-author-img">📅</div>
+                        <div class="post-author-info">
+                            <h3>Comunidade Discord</h3>
+                            <div class="post-meta">
+                                <span>📅 15 Fev 2026</span>
+                                <span>👤 Evento</span>
+                            </div>
+                        </div>
+                        <div class="post-badge">📅 ESTA SEMANA</div>
+                    </div>
+                    <div class="post-content">
+                        <h2 class="post-title">
+                            Sessão de Estudo Coletivo - Sábado 20h
+                        </h2>
+                        <p class="post-text">
+                            Vamos realizar a primeira "Sessão de Estudo Coletivo" no Discord! 🎯<br><br>
+                            📅 Data: Sábado, 28 Fevereiro<br>
+                            ⏰ Horário: 20h - 22h<br>
+                            📍 Local: Canal #estudo-coletivo no Discord<br><br>
+                            Durante 2 horas, todos estudamos juntos em silêncio, com pausas para 
+                            discussão e partilha de dúvidas. Traz os teus apontamentos!
+                        </p>
+                        <div class="post-tags">
+                            <span class="tag">#Evento</span>
+                            <span class="tag">#EstudoColetivo</span>
+                            <span class="tag">#Discord</span>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span class="stat-item">❤️ 89</span>
+                            <span class="stat-item">💬 34</span>
+                        </div>
+                        <button class="btn-post" onclick="window.open('https://discord.gg/intelecta', '_blank')">Participar</button>
+                    </div>
+                </div>
+
+                <!-- PUBLICAÇÃO 3 - NOVA FUNCIONALIDADE -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author-img">⚙️</div>
+                        <div class="post-author-info">
+                            <h3>Equipa Técnica</h3>
+                            <div class="post-meta">
+                                <span>📅 10 Fev 2026</span>
+                                <span>👤 Desenvolvimento</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <h2 class="post-title">
+                            Nova Funcionalidade: Perfil Académico Completo
+                        </h2>
+                        <p class="post-text">
+                            Agora podes completar ainda mais o teu perfil académico! Adicionámos:<br><br>
+                            📌 Áreas de interesse específicas<br>
+                            📌 Disciplinas que estás a estudar<br>
+                            📌 Projetos académicos<br>
+                            📌 Experiência de monitoria/tutoria<br><br>
+                            Atualiza agora o teu perfil na secção "Perfil".
+                        </p>
+                        <div class="post-tags">
+                            <span class="tag">#Atualização</span>
+                            <span class="tag">#Perfil</span>
+                            <span class="tag">#Novidades</span>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span class="stat-item">❤️ 67</span>
+                            <span class="stat-item">💬 12</span>
+                        </div>
+                        <a href="criar-perfil.html" class="btn-post">Atualizar perfil</a>
+                    </div>
+                </div>
             </div>
 
-            
-            <!-- Sidebar compacta -->
+            <!-- Sidebar - SEM CATEGORIAS -->
             <aside class="sidebar">
                 <!-- Discord Mini -->
                 <div class="sidebar-card discord-mini">
-                    <h3>🎮 <span>Discord</span></h3>
+                    <h3><span>Discord</span></h3>
                     <div class="online-indicator">
                         <span class="online-dot"></span>
                         <span>234 online agora</span>
@@ -678,23 +972,21 @@
 
                 <!-- Próximos eventos -->
                 <div class="sidebar-card">
-                    <h3>📅 <span>Eventos</span></h3>
-                    <div style="font-size: 0.9rem;">
-                        <p><strong>28 Fev</strong> - Estudo coletivo</p>
-                        <p><strong>05 Mar</strong> - Webinar</p>
-                        <p><strong>12 Mar</strong> - Networking</p>
+                    <h3><span>Eventos</span></h3>
+                    <div class="evento-item">
+                        <div class="evento-data">28 Fev</div>
+                        <div>Estudo coletivo - 20h</div>
+                    </div>
+                    <div class="evento-item">
+                        <div class="evento-data">05 Mar</div>
+                        <div>Webinar: métodos de estudo</div>
+                    </div>
+                    <div class="evento-item">
+                        <div class="evento-data">12 Mar</div>
+                        <div>Networking entre estudantes</div>
                     </div>
                 </div>
-
-                <!-- Categorias -->
-                <div class="sidebar-card">
-                    <h3>📌 <span>Categorias</span></h3>
-                    <div style="font-size: 0.9rem;">
-                        <p>• Lançamentos (3)</p>
-                        <p>• Eventos (5)</p>
-                        <p>• Atualizações (8)</p>
-                    </div>
-                </div>
+                <br>
             </aside>
         </div>
     </main>
@@ -706,7 +998,7 @@
     </footer>
 
     <script>
-        // Verificar sessão
+        // ==================== VERIFICAÇÃO DE SESSÃO ====================
         const sessao = JSON.parse(localStorage.getItem('sessao'));
         
         if (!sessao) {
@@ -715,11 +1007,81 @@
 
         document.getElementById('userNome').textContent = sessao.nome;
 
-        // Função sair
+        // ==================== FUNÇÃO SAIR ====================
         function sair() {
             localStorage.removeItem('sessao');
             window.location.href = 'index.html';
         }
+
+        // ==================== MENU HAMBÚRGUER - CORRIGIDO ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const navLinks = document.getElementById('navLinks');
+            const overlay = document.getElementById('overlay');
+
+            if (!hamburger || !navLinks || !overlay) {
+                console.error('Elementos do menu não encontrados');
+                return;
+            }
+
+            function toggleMenu() {
+                hamburger.classList.toggle('ativo');
+                navLinks.classList.toggle('ativo');
+                overlay.classList.toggle('ativo');
+                
+                // Prevenir scroll quando menu está aberto
+                if (navLinks.classList.contains('ativo')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+
+            // Abrir/fechar menu ao clicar no hamburger
+            hamburger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            // Fechar menu ao clicar no overlay
+            overlay.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleMenu();
+            });
+
+            // Fechar menu ao clicar num link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Fechar menu ao redimensionar para desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    hamburger.classList.remove('ativo');
+                    navLinks.classList.remove('ativo');
+                    overlay.classList.remove('ativo');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Prevenir que cliques dentro do menu fechem o menu
+            navLinks.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+
+        // ==================== SILENCIAR ERROS DE IMAGEM ====================
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                return false;
+            }
+        }, true);
     </script>
 </body>
-</html>
+    </html>
