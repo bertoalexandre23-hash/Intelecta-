@@ -139,22 +139,22 @@
         </div>
 
 <div class="cards">
+
     <div class="card">
         <h3>📚 Grupos de Estudo</h3>
         <p>Encontra grupos da tua área</p>
-        <a href="grupo.html" class="btn">Explorar grupos</a>
+        <button class="btn" onclick="irParaGrupos()">
+            Explorar grupos
+        </button>
     </div>
-</div>
-            <div class="card">
-                <h3>👥 Networking</h3>
-                <p>Conecta com outros estudantes</p>
-                <a href="grupo.html" class="btn">Criar conexão </a>
-            </div>
-            <div class="card">
-                <h3>📝 Meu Perfil</h3>
-                <p>Completa ou edita teu perfil</p>
-                <button class="btn" onclick="editarPerfil()">Ver perfil</button>
-            </div>
+
+    <div class="card">
+        <h3>👥 Networking</h3>
+        <p>Conecta com outros estudantes</p>
+        <button class="btn" onclick="criarConexao()">
+            Criar conexão
+        </button>
+    </div>
         </div>
     </main>
 
@@ -175,8 +175,14 @@
         function sair() {
             localStorage.removeItem('sessao');
             window.location.href = 'index.html';
+         }
+        function explorarGrupos() {
+            window.location.href = 'grupo.html';
         }
 
+        function criarConexao() {
+            windon.location.href = 'grupo.html';
+        }
         function editarPerfil() {
             window.location.href = 'criar-perfil.html';
         }
