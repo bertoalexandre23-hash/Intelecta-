@@ -1,404 +1,1050 @@
 <!DOCTYPE html>
-<html lang="pt-MZ">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grupos - Intelecta</title>
+    <title>Grupos de Estudo - Intelecta</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            background-color: #f0f2f5;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F5F7FA;
+        }
+
+        :root {
+            --azul-escuro: #0A1929;
+            --azul-medio: #1E2F4A;
+            --preto: #0F0F0F;
+            --dourado: #CFAF4E;
+            --dourado-claro: #E5C87C;
+            --dourado-escuro: #B8962C;
+            --branco: #FFFFFF;
+            --cinza-claro: #F5F7FA;
+            --cinza: #E0E4E9;
+            --cinza-escuro: #4A5568;
         }
 
         /* Header */
         header {
-            background-color: #2563EB;
-            padding: 15px;
-            color: white;
+            background: var(--azul-escuro);
+            padding: 1rem 0;
+            border-bottom: 3px solid var(--dourado);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .logo {
+            color: var(--dourado);
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .user-menu a {
+            color: var(--branco);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .user-menu a:hover {
+            color: var(--dourado);
+        }
+
+        .user-menu a.ativo {
+            color: var(--dourado);
+            border-bottom: 2px solid var(--dourado);
+            padding-bottom: 0.25rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--branco);
+        }
+
+        .user-nome {
+            color: var(--dourado);
+            font-weight: 600;
+        }
+
+        .btn-sair {
+            background: transparent;
+            border: 2px solid var(--dourado);
+            color: var(--dourado);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-sair:hover {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+        }
+
+        /* Main */
+        main {
+            padding: 2rem 0;
+        }
+
+        /* Título da página */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--azul-escuro);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header h1 span {
+            color: var(--dourado);
+        }
+
+        .page-header p {
+            color: var(--cinza-escuro);
+            font-size: 1.1rem;
+        }
+
+        /* Barra de busca e filtros */
+        .search-section {
+            background: var(--branco);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--cinza);
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--cinza);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input input:focus {
+            outline: none;
+            border-color: var(--dourado);
+            box-shadow: 0 0 0 4px rgba(207,175,78,0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--cinza-escuro);
+        }
+
+        .filtros {
+            display: flex;
+            gap: 1rem;
             flex-wrap: wrap;
         }
 
-        .logo a {
-            color: white;
-            text-decoration: none;
-            font-size: 22px;
+        .filtro-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filtro-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--cinza);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: var(--branco);
+            cursor: pointer;
+        }
+
+        .filtro-group select:focus {
+            outline: none;
+            border-color: var(--dourado);
+        }
+
+        .filtro-ativo {
+            display: inline-block;
+            background: rgba(207,175,78,0.1);
+            color: var(--dourado-escuro);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--dourado);
+        }
+
+        .filtro-ativo button {
+            background: none;
+            border: none;
+            margin-left: 0.5rem;
+            color: var(--dourado-escuro);
+            cursor: pointer;
             font-weight: bold;
         }
 
-        .header-icons {
+        /* Estatísticas */
+        .stats-bar {
             display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .header-icons a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-        }
-
-        .header-icons i {
-            font-size: 18px;
-            margin-bottom: 3px;
-        }
-
-        /* Container principal */
-        .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-
-        /* Card */
-        .card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .titulo {
-            color: #2563EB;
-            font-size: 22px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .subtitulo {
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        /* Busca */
-        .busca {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .busca input {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 15px;
+        .result-count {
+            color: var(--cinza-escuro);
         }
 
-        .busca button {
-            background-color: #2563EB;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 5px;
+        .result-count strong {
+            color: var(--dourado);
+            font-size: 1.2rem;
+        }
+
+        .view-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--cinza);
+            border-radius: 8px;
+            background: var(--branco);
             cursor: pointer;
-            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .view-btn.ativo {
+            border-color: var(--dourado);
+            color: var(--dourado);
         }
 
         /* Grid de grupos */
         .grupos-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
+        /* Card de grupo */
         .grupo-card {
-            background-color: white;
-            border: 1px solid #eee;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
+            background: var(--branco);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 1px solid var(--cinza);
+            cursor: pointer;
+        }
+
+        .grupo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(207,175,78,0.15);
+            border-color: var(--dourado);
+        }
+
+        .grupo-card.destaque {
+            border: 2px solid var(--dourado);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--cinza);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .grupo-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #2563EB;
-            color: white;
+            width: 60px;
+            height: 60px;
+            background: var(--azul-escuro);
+            color: var(--dourado);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 35px;
-            margin: 0 auto 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
         }
 
-        .grupo-card h3 {
-            color: #333;
-            font-size: 18px;
-            margin-bottom: 5px;
+        .grupo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .grupo-card p {
-            color: #666;
-            font-size: 13px;
-            margin-bottom: 5px;
+        .grupo-titulo h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 0.25rem;
         }
 
-        .membros {
-            color: #2563EB;
-            font-size: 12px;
-            margin-bottom: 15px;
+        .grupo-area {
+            display: inline-block;
+            background: rgba(207,175,78,0.1);
+            color: var(--dourado-escuro);
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .grupo-descricao {
+            color: var(--cinza-escuro);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .grupo-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.9rem;
+            color: var(--cinza-escuro);
+        }
+
+        .meta-item strong {
+            color: var(--dourado);
+        }
+
+        .grupo-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: var(--cinza-claro);
+            color: var(--azul-escuro);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .card-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--cinza);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .btn-grupo {
-            background-color: #2563EB;
-            color: white;
+            background: var(--dourado);
+            color: var(--azul-escuro);
             border: none;
-            padding: 8px 25px;
-            border-radius: 5px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 14px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-grupo:hover {
-            background-color: #1e4bb3;
+            background: var(--dourado-claro);
+            transform: scale(1.05);
         }
 
-        .btn-grupo.entrou {
-            background-color: #28a745;
+        .btn-outline-grupo {
+            background: transparent;
+            border: 2px solid var(--dourado);
+            color: var(--dourado);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        /* Meus grupos */
-        .meus-grupos {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+        .btn-outline-grupo:hover {
+            background: var(--dourado);
+            color: var(--azul-escuro);
         }
 
-        .meu-grupo-item {
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            padding: 15px;
+        .membros-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.5rem;
         }
 
-        .mini-icon {
-            width: 40px;
-            height: 40px;
+        .membros-avatars {
+            display: flex;
+        }
+
+        .membro-avatar {
+            width: 30px;
+            height: 30px;
+            background: var(--cinza);
             border-radius: 50%;
-            background-color: #2563EB;
-            color: white;
+            border: 2px solid var(--branco);
+            margin-left: -8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 0.7rem;
+            color: var(--azul-escuro);
         }
 
-        .meu-grupo-info h4 {
-            color: #333;
-            font-size: 14px;
-            margin-bottom: 3px;
+        .membro-avatar:first-child {
+            margin-left: 0;
         }
 
-        .meu-grupo-info p {
-            color: #666;
-            font-size: 11px;
+        /* Load more */
+        .load-more {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn-load-more {
+            background: transparent;
+            border: 2px solid var(--dourado);
+            color: var(--dourado);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-load-more:hover {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+        }
+
+        /* Modal de detalhes do grupo */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.ativo {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--branco);
+            border-radius: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--azul-escuro), var(--preto));
+            padding: 2rem;
+            color: var(--branco);
+            border-bottom: 3px solid var(--dourado);
+        }
+
+        .modal-header h2 {
+            color: var(--dourado);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            padding: 2rem;
+            border-top: 1px solid var(--cinza);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-fechar {
+            background: var(--cinza);
+            color: var(--azul-escuro);
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            flex: 1;
         }
 
         /* Footer */
         footer {
+            background: var(--preto);
+            color: var(--branco);
             text-align: center;
-            padding: 30px;
-            color: #666;
-            font-size: 13px;
-        }
-
-        footer a {
-            color: #2563EB;
-            text-decoration: none;
-            margin: 0 10px;
+            padding: 2rem 0;
+            border-top: 3px solid var(--dourado);
         }
 
         /* Responsivo */
-        @media (max-width: 800px) {
+        @media (max-width: 1024px) {
             .grupos-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .meus-grupos {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .user-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .filtros {
+                flex-direction: column;
+            }
+            
             .grupos-grid {
                 grid-template-columns: 1fr;
             }
             
-            .meus-grupos {
-                grid-template-columns: 1fr;
-            }
-            
-            .header-icons span {
-                display: none;
-            }
-            
-            .header-icons {
-                gap: 15px;
-            }
-            
-            .header-icons i {
-                font-size: 22px;
+            .page-header h1 {
+                font-size: 2rem;
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">
-            <a href="feed.html">Intelecta</a>
-        </div>
-        <div class="header-icons">
-            <a href="feed.html"><i class="fas fa-home"></i><span>Início</span></a>
-            <a href="conexoes.html"><i class="fas fa-user-friends"></i><span>Conexões</span></a>
-            <a href="mensagens.html"><i class="fas fa-envelope"></i><span>Mensagens</span></a>
-            <a href="grupos.html"><i class="fas fa-users"></i><span>Grupos</span></a>
-            <a href="perfil.html"><i class="fas fa-user"></i><span>Perfil</span></a>
+        <div class="container header-content">
+            <a href="dashboard.html" class="logo">INTELECTA</a>
+            <div class="user-menu">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="grupos.html" class="ativo">Grupos</a>
+                <a href="#">Networking</a>
+                <a href="#">Perfil</a>
+                <div class="user-info">
+                    <span class="user-nome" id="userNome">Carregando...</span>
+                    <button class="btn-sair" onclick="sair()">Sair</button>
+                </div>
+            </div>
         </div>
     </header>
 
-    <div class="container">
-        <!-- Busca -->
-        <div class="card">
-            <div class="busca">
-                <input type="text" placeholder="Pesquisar grupos...">
-                <button><i class="fas fa-search"></i> Pesquisar</button>
+    <main class="container">
+        <!-- Cabeçalho da página -->
+        <div class="page-header">
+            <h1>Grupos de <span>Estudo</span></h1>
+            <p>Encontra o grupo perfeito para crescer academicamente com outros estudantes</p>
+        </div>
+
+        <!-- Barra de busca e filtros -->
+        <div class="search-section">
+            <div class="search-bar">
+                <div class="search-input">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="busca" placeholder="Pesquisar grupos por nome, área, universidade..." onkeyup="filtrarGrupos()">
+                </div>
+            </div>
+
+            <div class="filtros">
+                <div class="filtro-group">
+                    <select id="filtroArea" onchange="filtrarGrupos()">
+                        <option value="">Todas as áreas</option>
+                        <option value="Medicina">Medicina</option>
+                        <option value="Engenharia">Engenharia</option>
+                        <option value="Direito">Direito</option>
+                        <option value="Computação">Computação</option>
+                        <option value="Economia">Economia</option>
+                        <option value="Matemática">Matemática</option>
+                        <option value="Física">Física</option>
+                        <option value="Química">Química</option>
+                        <option value="Biologia">Biologia</option>
+                    </select>
+                </div>
+
+                <div class="filtro-group">
+                    <select id="filtroUniversidade" onchange="filtrarGrupos()">
+                        <option value="">Todas as universidades</option>
+                        <option value="UEM">UEM</option>
+                        <option value="UJC">UJC</option>
+                        <option value="UP">UP</option>
+                        <option value="UniLurio">UniLúrio</option>
+                        <option value="ISCTEM">ISCTEM</option>
+                    </select>
+                </div>
+
+                <div class="filtro-group">
+                    <select id="filtroTipo" onchange="filtrarGrupos()">
+                        <option value="">Todos os tipos</option>
+                        <option value="Publico">Público</option>
+                        <option value="Privado">Privado</option>
+                        <option value="Destaque">Em destaque</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="filtrosAtivos" style="margin-top: 1rem;"></div>
+        </div>
+
+        <!-- Estatísticas e visualização -->
+        <div class="stats-bar">
+            <div class="result-count" id="resultCount">
+                <strong id="totalGrupos">0</strong> grupos encontrados
+            </div>
+            <div class="view-options">
+                <button class="view-btn ativo" onclick="mudarVisualizacao('grid')">📱 Grid</button>
+                <button class="view-btn" onclick="mudarVisualizacao('lista')">📋 Lista</button>
             </div>
         </div>
 
-        <!-- Meus grupos -->
-        <div class="card">
-            <div class="titulo">
-                <i class="fas fa-users"></i> Meus Grupos
-            </div>
-            <div class="meus-grupos">
-                <div class="meu-grupo-item">
-                    <div class="mini-icon"><i class="fas fa-calculator"></i></div>
-                    <div class="meu-grupo-info">
-                        <h4>Matemática 12ª</h4>
-                        <p>45 membros</p>
-                    </div>
-                </div>
-                <div class="meu-grupo-item">
-                    <div class="mini-icon"><i class="fas fa-code"></i></div>
-                    <div class="meu-grupo-info">
-                        <h4>Programação Web</h4>
-                        <p>28 membros</p>
-                    </div>
-                </div>
-                <div class="meu-grupo-item">
-                    <div class="mini-icon"><i class="fas fa-flask"></i></div>
-                    <div class="meu-grupo-info">
-                        <h4>Física Geral</h4>
-                        <p>32 membros</p>
-                    </div>
-                </div>
-                <div class="meu-grupo-item">
-                    <div class="mini-icon"><i class="fas fa-language"></i></div>
-                    <div class="meu-grupo-info">
-                        <h4>Inglês Académico</h4>
-                        <p>19 membros</p>
-                    </div>
-                </div>
-            </div>
+        <!-- Grid de grupos -->
+        <div class="grupos-grid" id="gruposContainer">
+            <!-- Grupos serão carregados aqui via JavaScript -->
         </div>
 
-        <!-- Grupos recomendados -->
-        <div class="card">
-            <div class="titulo">
-                <i class="fas fa-star"></i> Grupos Recomendados
-            </div>
-            <div class="subtitulo">Grupos que podes gostar com base nos teus interesses</div>
-            
-            <div class="grupos-grid">
-                <div class="grupo-card">
-                    <div class="grupo-icon"><i class="fas fa-brain"></i></div>
-                    <h3>Psicologia do Desporto</h3>
-                    <p>Discussões sobre mente e performance</p>
-                    <div class="membros">1.2k membros</div>
-                    <button class="btn-grupo" onclick="this.innerHTML='Entrou'; this.classList.add('entrou')">Entrar</button>
-                </div>
-
-                <div class="grupo-card">
-                    <div class="grupo-icon"><i class="fas fa-futbol"></i></div>
-                    <h3>Futebol e Ciência</h3>
-                    <p>Análise tática e preparação física</p>
-                    <div class="membros">856 membros</div>
-                    <button class="btn-grupo" onclick="this.innerHTML='Entrou'; this.classList.add('entrou')">Entrar</button>
-                </div>
-
-                <div class="grupo-card">
-                    <div class="grupo-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <h3>Estudantes UEM</h3>
-                    <p>Comunidade da Universidade Eduardo Mondlane</p>
-                    <div class="membros">3.4k membros</div>
-                    <button class="btn-grupo" onclick="this.innerHTML='Entrou'; this.classList.add('entrou')">Entrar</button>
-                </div>
-
-                <div class="grupo-card">
-                    <div class="grupo-icon"><i class="fas fa-calculator"></i></div>
-                    <h3>Cálculo I</h3>
-                    <p>Ajuda com limites, derivadas e integrais</p>
-                    <div class="membros">2.1k membros</div>
-                    <button class="btn-grupo" onclick="this.innerHTML='Entrou'; this.classList.add('entrou')">Entrar</button>
-                </div>
-
-                <div class="grupo-card">
-                    <div class="grupo-icon"><i class="fas fa-laptop-code"></i></div>
-                    <h3>Escola Secundaria Don Bosco</h3>
-                    <p></p>
-                    <div class="membros">1.8k membros</div>
-                    <button class="btn-grupo" onclick="this.innerHTML='Entrou'; this.classList.add('entrou')">Entrar</button>
-                </div>
-
-                <div class="grupo-card">
-                    <div class="grupo-icon"><i class="fas fa-book-open"></i></div>
-                    <h3>Literatura Moçambicana</h3>
-                    <p>Estudo de autores nacionais</p>
-                    <div class="membros">567 membros</div>
-                    <button class="btn-grupo" onclick="this.innerHTML='Entrou'; this.classList.add('entrou')">Entrar</button>
-                </div>
-            </div>
+        <!-- Botão carregar mais -->
+        <div class="load-more" id="loadMoreBtn">
+            <button class="btn-load-more" onclick="carregarMais()">Carregar mais grupos</button>
         </div>
+    </main>
 
-        <!-- Criar novo grupo -->
-        <div class="card" style="text-align: center;">
-            <p style="color: #666; margin-bottom: 15px;">Não encontraste o que procuravas?</p>
-            <button class="btn-grupo" style="padding: 12px 40px;" onclick="alert('Criar novo grupo (simulação)')">
-                <i class="fas fa-plus"></i> Criar Novo Grupo
-            </button>
+    <!-- Modal de detalhes do grupo -->
+    <div class="modal" id="grupoModal">
+        <div class="modal-content" id="modalContent">
+            <!-- Conteúdo carregado via JS -->
         </div>
     </div>
 
     <footer>
-        <p>Intelecta © 2024 - Estudantes de Moçambique</p>
-        <p>
-            <a href="#">Sobre</a> |
-            <a href="#">Termos</a> |
-            <a href="#">Privacidade</a> |
-            <a href="index.html">Sair</a>
-        </p>
+        <div class="container">
+            <p>© 2026 Intelecta - Conectando estudantes moçambicanos</p>
+        </div>
     </footer>
+
+    <script>
+        // ==================== VERIFICAÇÃO DE SESSÃO ====================
+        const sessao = JSON.parse(localStorage.getItem('sessao'));
+        
+        if (!sessao) {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('userNome').textContent = sessao.nome;
+
+        // ==================== BASE DE DADOS DE GRUPOS ====================
+        const grupos = [
+            {
+                id: 1,
+                nome: "Medicina UEM - 2026",
+                area: "Medicina",
+                universidade: "UEM",
+                tipo: "Publico",
+                destaque: true,
+                descricao: "Grupo de estudos para estudantes de medicina da UEM. Discussões de casos clínicos, preparação para exames e partilha de materiais.",
+                membros: 234,
+                vagas: 50,
+                tags: ["Anatomia", "Fisiologia", "Semiologia"],
+                imagem: null,
+                cor: "#0A1929"
+            },
+            {
+                id: 2,
+                nome: "Programação Competitiva",
+                area: "Computação",
+                universidade: "UJC",
+                tipo: "Publico",
+                destaque: false,
+                descricao: "Treino para competições de programação (ICP, Maratona). Algoritmos, estruturas de dados e resolução de problemas.",
+                membros: 156,
+                vagas: 20,
+                tags: ["Algoritmos", "Python", "C++"],
+                imagem: null
+            },
+            {
+                id: 3,
+                nome: "Direito Constitucional",
+                area: "Direito",
+                universidade: "UP",
+                tipo: "Privado",
+                destaque: false,
+                descricao: "Grupo focado em direito constitucional moçambicano. Análise de jurisprudência e preparação para exame da ordem.",
+                membros: 89,
+                vagas: 10,
+                tags: ["Constituição", "Direitos Humanos", "Jurisprudência"],
+                imagem: null
+            },
+            {
+                id: 4,
+                nome: "Engenharia Civil - Materiais",
+                area: "Engenharia",
+                universidade: "UEM",
+                tipo: "Publico",
+                destaque: true,
+                descricao: "Discussão sobre materiais de construção, resistência dos materiais e novas tecnologias na engenharia civil.",
+                membros: 167,
+                vagas: 30,
+                tags: ["Concreto", "Estruturas", "Materiais"],
+                imagem: null
+            },
+            {
+                id: 5,
+                nome: "Matemática Pura",
+                area: "Matemática",
+                universidade: "UJC",
+                tipo: "Publico",
+                destaque: false,
+                descricao: "Grupo para amantes da matemática. Cálculo, álgebra linear, geometria analítica e desafios matemáticos.",
+                membros: 112,
+                vagas: 15,
+                tags: ["Cálculo", "Álgebra", "Geometria"],
+                imagem: null
+            },
+            {
+                id: 6,
+                nome: "Física Moderna",
+                area: "Física",
+                universidade: "UEM",
+                tipo: "Privado",
+                destaque: false,
+                descricao: "Estudo de física quântica, relatividade e áreas avançadas da física. Grupo com encontros semanais.",
+                membros: 45,
+                vagas: 5,
+                tags: ["Quântica", "Relatividade", "Termodinâmica"],
+                imagem: null
+            },
+            {
+                id: 7,
+                nome: "Economia e Mercados",
+                area: "Economia",
+                universidade: "ISCTEM",
+                tipo: "Publico",
+                destaque: true,
+                descricao: "Análise de mercados, micro e macroeconomia. Discussão sobre a economia moçambicana e internacional.",
+                membros: 198,
+                vagas: 25,
+                tags: ["Microeconomia", "Mercados", "Investimentos"],
+                imagem: null
+            },
+            {
+                id: 8,
+                nome: "Química Orgânica",
+                area: "Química",
+                universidade: "UP",
+                tipo: "Publico",
+                destaque: false,
+                descricao: "Grupo dedicado ao estudo da química orgânica. Mecanismos de reação, síntese e resolução de exercícios.",
+                membros: 76,
+                vagas: 20,
+                tags: ["Reações", "Compostos", "Laboratório"],
+                imagem: null
+            },
+            {
+                id: 9,
+                nome: "Biologia Molecular",
+                area: "Biologia",
+                universidade: "UniLurio",
+                tipo: "Privado",
+                destaque: false,
+                descricao: "Estudo de genética, biologia celular e molecular. Grupo de pesquisa e discussão de artigos científicos.",
+                membros: 34,
+                vagas: 8,
+                tags: ["Genética", "DNA", "Células"],
+                imagem: null
+            }
+        ];
+
+        // Variáveis de estado
+        let gruposFiltrados = [...grupos];
+        let itensPorPagina = 6;
+        let paginaAtual = 1;
+        let visualizacaoAtual = 'grid';
+
+        // ==================== FUNÇÕES DE RENDERIZAÇÃO ====================
+        function renderizarGrupos() {
+            const container = document.getElementById('gruposContainer');
+            const inicio = 0;
+            const fim = paginaAtual * itensPorPagina;
+            const gruposParaMostrar = gruposFiltrados.slice(0, fim);
+            
+            container.innerHTML = gruposParaMostrar.map(grupo => criarCardGrupo(grupo)).join('');
+            
+            // Atualizar contador
+            document.getElementById('totalGrupos').textContent = gruposFiltrados.length;
+            
+            // Mostrar/esconder botão carregar mais
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (fim >= gruposFiltrados.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
+        }
+
+        function criarCardGrupo(grupo) {
+            return `
+                <div class="grupo-card ${grupo.destaque ? 'destaque' : ''}" onclick="abrirModal(${grupo.id})">
+                    <div class="card-header">
+                        <div class="grupo-icon" style="background: ${grupo.cor || '#0A1929'};">
+                            ${grupo.imagem ? `<img src="${grupo.imagem}" alt="${grupo.nome}">` : grupo.nome.charAt(0)}
+                        </div>
+                        <div class="grupo-titulo">
+                            <h3>${grupo.nome}</h3>
+                            <span class="grupo-area">${grupo.area}</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="grupo-descricao">${grupo.descricao.substring(0, 80)}...</p>
+                        <div class="grupo-meta">
+                            <span class="meta-item">👥 <strong>${grupo.membros}</strong> membros</span>
+                            <span class="meta-item">🎓 ${grupo.universidade}</span>
+                        </div>
+                        <div class="grupo-tags">
+                            ${grupo.tags.slice(0, 3).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn-grupo" onclick="event.stopPropagation(); entrarGrupo(${grupo.id})">Entrar</button>
+                        <div class="membros-info">
+                            <div class="membros-avatars">
+                                <div class="membro-avatar">👤</div>
+                                <div class="membro-avatar">👤</div>
+                                <div class="membro-avatar">👤</div>
+                            </div>
+                            <span>+${grupo.membros}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==================== FUNÇÕES DE FILTRO ====================
+        function filtrarGrupos() {
+            const termoBusca = document.getElementById('busca').value.toLowerCase();
+            const area = document.getElementById('filtroArea').value;
+            const universidade = document.getElementById('filtroUniversidade').value;
+            const tipo = document.getElementById('filtroTipo').value;
+
+            gruposFiltrados = grupos.filter(grupo => {
+                // Filtro por busca
+                const matchBusca = termoBusca === '' || 
+                    grupo.nome.toLowerCase().includes(termoBusca) ||
+                    grupo.descricao.toLowerCase().includes(termoBusca) ||
+                    grupo.area.toLowerCase().includes(termoBusca) ||
+                    grupo.tags.some(tag => tag.toLowerCase().includes(termoBusca));
+
+                // Filtro por área
+                const matchArea = area === '' || grupo.area === area;
+
+                // Filtro por universidade
+                const matchUniversidade = universidade === '' || grupo.universidade === universidade;
+
+                // Filtro por tipo
+                const matchTipo = tipo === '' || 
+                    (tipo === 'Destaque' ? grupo.destaque : grupo.tipo === tipo);
+
+                return matchBusca && matchArea && matchUniversidade && matchTipo;
+            });
+
+            // Resetar paginação
+            paginaAtual = 1;
+            
+            // Mostrar filtros ativos
+            mostrarFiltrosAtivos();
+            
+            // Renderizar
+            renderizarGrupos();
+        }
+
+        function mostrarFiltrosAtivos() {
+            const container = document.getElementById('filtrosAtivos');
+            const filtros = [];
+            
+            const termoBusca = document.getElementById('busca').value;
+            const area = document.getElementById('filtroArea').value;
+            const universidade = document.getElementById('filtroUniversidade').value;
+            const tipo = document.getElementById('filtroTipo').value;
+
+            if (termoBusca) filtros.push(`Busca: "${termoBusca}"`);
+            if (area) filtros.push(`Área: ${area}`);
+            if (universidade) filtros.push(`Universidade: ${universidade}`);
+            if (tipo) filtros.push(`Tipo: ${tipo}`);
+
+            if (filtros.length > 0) {
+                container.innerHTML = filtros.map(f => `
+                    <span class="filtro-ativo">
+                        ${f} <button onclick="removerFiltro('${f.split(':')[0].toLowerCase()}')">✕</button>
+                    </span>
+                `).join('');
+            } else {
+                container.innerHTML = '';
+            }
+        }
+
+        function removerFiltro(tipo) {
+            if (tipo.includes('busca')) {
+                document.getElementById('busca').value = '';
+            } else if (tipo.includes('área')) {
+                document.getElementById('filtroArea').value = '';
+            } else if (tipo.includes('universidade')) {
+                document.getElementById('filtroUniversidade').value = '';
+            } else if (tipo.includes('tipo')) {
+                document.getElementById('filtroTipo').value = '';
+            }
+            filtrarGrupos();
+        }
+
+        // ==================== FUNÇÕES DE INTERAÇÃO ====================
+        function carregarMais() {
+            paginaAtual++;
+            renderizarGrupos();
+        }
+
+        function mudarVisualizacao(tipo) {
+            visualizacaoAtual = tipo;
+            // Aqui poderia alterar o layout para lista
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('ativo'));
+            event.target.classList.add('ativo');
+        }
+
+        function abrirModal(id) {
+            const grupo = grupos.find(g => g.id === id);
+            const modal = document.getElementById('grupoModal');
+            const modalContent = document.getElementById('modalContent');
+
+            modalContent.innerHTML = `
+                <div class="modal-header">
+                    <h2>${grupo.nome}</h2>
+                    <p>${grupo.area} • ${grupo.universidade}</p>
+                </div>
+                <div class="modal-body">
+                    <p style="margin-bottom: 1.5rem;">${grupo.descricao}</p>
+                    
+                    <h3 style="color: var(--azul-escuro); margin-bottom: 1rem;">Informações</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                        <div><strong>Membros:</strong> ${grupo.membros}</div>
+                        <div><strong>Vagas:</strong> ${grupo.vagas}</div>
+                        <div><strong>Tipo:</strong> ${grupo.tipo}</div>
+                        <div><strong>Criado em:</strong> 2024</div>
+                    </div>
+
+                    <h3 style="color: var(--azul-escuro); margin-bottom: 1rem;">Tags</h3>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                        ${grupo.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+
+                    <h3 style="color: var(--azul-escuro); margin-bottom: 1rem;">Membros recentes</h3>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+                        <div class="membro-avatar" style="width: 40px; height: 40px;">👤</div>
+                        <div class="membro-avatar" style="width: 40px; height: 40px;">👤</div>
+                        <div class="membro-avatar" style="width: 40px; height: 40px;">👤</div>
+                        <div class="membro-avatar" style="width: 40px; height: 40px;">👤</div>
+                        <div class="membro-avatar" style="width: 40px; height: 40px;">👤</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-grupo" style="flex: 2;" onclick="entrarGrupo(${grupo.id})">Entrar no grupo</button>
+                    <button class="btn-fechar" style="flex: 1;" onclick="fecharModal()">Fechar</button>
+                </div>
+            `;
+
+            modal.classList.add('ativo');
+        }
+
+        function fecharModal() {
+            document.getElementById('grupoModal').classList.remove('ativo');
+        }
+
+        function entrarGrupo(id) {
+            const grupo = grupos.find(g => g.id === id);
+            alert(`A entrar no grupo "${grupo.nome}"...\nNuma versão real, serias redirecionado para o Discord.`);
+        }
+
+        // Fechar modal ao clicar fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('grupoModal');
+            if (event.target === modal) {
+                modal.classList.remove('ativo');
+            }
+        };
+
+        // ==================== FUNÇÕES DE SESSÃO ====================
+        function sair() {
+            localStorage.removeItem('sessao');
+            window.location.href = 'index.html';
+        }
+
+        // ==================== INICIALIZAÇÃO ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            filtrarGrupos();
+        });
+    </script>
 </body>
 </html>
