@@ -90,11 +90,26 @@
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border: 1px solid #eee;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(207,175,78,0.15);
         }
 
         .card h3 {
             color: var(--azul-escuro);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
         }
 
         .btn {
@@ -106,6 +121,12 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #E5C87C;
+            transform: scale(1.02);
         }
 
         footer {
@@ -117,14 +138,16 @@
         }
 
         @media (max-width: 768px) {
-            .cards { grid-template-columns: 1fr; }
+            .cards { 
+                grid-template-columns: 1fr; 
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container header-content">
-            <a href="#" class="logo">INTELECTA</a>
+            <a href="dashboard.html" class="logo">INTELECTA</a>
             <div class="user-menu" id="userMenu">
                 <span id="userName">Carregando...</span>
                 <button class="btn-sair" onclick="sair()">Sair</button>
@@ -138,29 +161,33 @@
             <p>O que queres fazer hoje?</p>
         </div>
 
-<div class="cards">
+        <div class="cards">
+            <!-- Card Grupos de Estudo -->
+            <div class="card">
+                <h3>📚 Grupos de Estudo</h3>
+                <p>Encontra grupos da tua área e conecta-te com outros estudantes</p>
+                <button class="btn" onclick="irParaGrupos()">
+                    Explorar grupos →
+                </button>
+            </div>
 
-    <div class="card">
-        <h3>📚 Grupos de Estudo</h3>
-        <p>Encontra grupos da tua área</p>
-        <button class="btn" onclick="irParaGrupos()">
-            Explorar grupos
-        </button>
-    </div>
+            <!-- Card Atualizações -->
+            <div class="card">
+                <h3>📢 Atualizações Intelecta</h3>
+                <p>Fica por dentro das últimas novidades da plataforma e comunidade</p>
+                <button class="btn" onclick="irParaAtualizacoes()">
+                    Ver novidades →
+                </button>
+            </div>
 
-    <div class="card">
-        <h3>📢 Atualização <p>Intelecta</p></h3>
-        <p>Atualize se com as ultimas novidades da Intelecta</p>
-        <button class="btn" onclick="atualização()">
-            Atualização 
-        </button>
-    </div>
-
-    <div class="card">  
-            <h3>📝 Meu Perfil</h3>  
-            <p>Completa ou edita teu perfil</p>  
-            <button class="btn" onclick="editarPerfil()">Ver perfil</button>  
-    </div>
+            <!-- Card Perfil -->
+            <div class="card">  
+                <h3>📝 Meu Perfil</h3>  
+                <p>Completa ou edita teu perfil académico</p>  
+                <button class="btn" onclick="editarPerfil()">
+                    Ver perfil →
+                </button>  
+            </div>
         </div>
     </main>
 
@@ -169,27 +196,43 @@
     </footer>
 
     <script>
+        // Verificar se utilizador está logado
         const sessao = JSON.parse(localStorage.getItem('sessao'));
         
         if (!sessao) {
             window.location.href = 'index.html';
         }
 
+        // Mostrar nome do utilizador
         document.getElementById('userName').textContent = sessao.nome;
         document.getElementById('nomeDashboard').textContent = sessao.nome.split(' ')[0];
 
+        // ========== FUNÇÕES DE NAVEGAÇÃO CORRIGIDAS ==========
+        
+        // Função para ir aos grupos de estudo
+        function irParaGrupos() {
+            window.location.href = 'grupo.html';
+        }
+
+        // Função para ir às atualizações (CORRIGIDA)
+        function irParaAtualizacoes() {
+            window.location.href = 'atualiza.html';  // Nome correto do arquivo
+        }
+
+        // Função para editar perfil
+        function editarPerfil() {
+            window.location.href = 'criar-perfil.html';
+        }
+
+        // Função para sair
         function sair() {
             localStorage.removeItem('sessao');
             window.location.href = 'index.html';
-         }
-        function atualiza() {
-            window.location.href = 'atualiza.html';
         }
-        function criarConexao() {
-            windon.location.href = 'grupo.html';
-        }
-        function editarPerfil() {
-            window.location.href = 'criar-perfil.html';
+
+        // Função extra caso queira voltar atrás (opcional)
+        function voltar() {
+            window.history.back();
         }
     </script>
 </body>
