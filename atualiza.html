@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizações - Intelecta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F5F7FA;
+        }
+
+        :root {
+            --azul-escuro: #0A1929;
+            --azul-medio: #1E2F4A;
+            --preto: #0F0F0F;
+            --dourado: #CFAF4E;
+            --dourado-claro: #E5C87C;
+            --dourado-escuro: #B8962C;
+            --branco: #FFFFFF;
+            --cinza-claro: #F5F7FA;
+            --cinza: #E0E4E9;
+            --cinza-escuro: #4A5568;
+        }
+
+        /* Header */
+        header {
+            background: var(--azul-escuro);
+            padding: 1rem 0;
+            border-bottom: 3px solid var(--dourado);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--dourado);
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .user-menu a {
+            color: var(--branco);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .user-menu a:hover {
+            color: var(--dourado);
+        }
+
+        .user-menu a.ativo {
+            color: var(--dourado);
+            border-bottom: 2px solid var(--dourado);
+            padding-bottom: 0.25rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--branco);
+        }
+
+        .user-nome {
+            color: var(--dourado);
+            font-weight: 600;
+        }
+
+        .btn-sair {
+            background: transparent;
+            border: 2px solid var(--dourado);
+            color: var(--dourado);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-sair:hover {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+        }
+
+        /* Main */
+        main {
+            padding: 2rem 0;
+        }
+
+        /* Cabeçalho da página */
+        .page-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            color: var(--azul-escuro);
+            margin-bottom: 1rem;
+        }
+
+        .page-header h1 span {
+            color: var(--dourado);
+        }
+
+        .page-header p {
+            color: var(--cinza-escuro);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Banner do Discord */
+        .discord-banner {
+            background: linear-gradient(135deg, var(--azul-escuro), var(--preto));
+            border-radius: 30px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            border: 1px solid var(--dourado);
+            box-shadow: 0 15px 30px rgba(207,175,78,0.2);
+        }
+
+        .discord-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .discord-icon {
+            background: #5865F2;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .discord-text h2 {
+            color: var(--dourado);
+            margin-bottom: 0.5rem;
+        }
+
+        .discord-text p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .discord-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dourado);
+        }
+
+        .stat-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .btn-discord {
+            background: #5865F2;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-discord:hover {
+            background: #4752C4;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(88,101,242,0.3);
+        }
+
+        /* Layout principal com sidebar */
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        /* Feed de atualizações */
+        .feed {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Post */
+        .post {
+            background: var(--branco);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 1px solid var(--cinza);
+        }
+
+        .post:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(207,175,78,0.15);
+            border-color: var(--dourado);
+        }
+
+        .post.destaque {
+            border: 2px solid var(--dourado);
+        }
+
+        .post-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--cinza);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .post-author-img {
+            width: 50px;
+            height: 50px;
+            background: var(--azul-escuro);
+            color: var(--dourado);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .post-author-info h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 0.25rem;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--cinza-escuro);
+            font-size: 0.9rem;
+        }
+
+        .post-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .post-badge {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            color: var(--azul-escuro);
+            margin-bottom: 1rem;
+        }
+
+        .post-title a {
+            color: var(--azul-escuro);
+            text-decoration: none;
+        }
+
+        .post-title a:hover {
+            color: var(--dourado);
+        }
+
+        .post-text {
+            color: var(--cinza-escuro);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: 15px;
+            margin: 1rem 0;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: var(--cinza-claro);
+            color: var(--azul-escuro);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .post-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--cinza);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .post-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--cinza-escuro);
+            font-size: 0.95rem;
+        }
+
+        .btn-post {
+            background: transparent;
+            border: 2px solid var(--dourado);
+            color: var(--dourado);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-post:hover {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-card {
+            background: var(--branco);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid var(--cinza);
+        }
+
+        .sidebar-card h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-card h3 span {
+            color: var(--dourado);
+        }
+
+        /* Comunidade no Discord */
+        .discord-widget {
+            background: linear-gradient(135deg, var(--azul-escuro), var(--preto));
+            color: white;
+        }
+
+        .discord-widget h3 {
+            color: var(--dourado);
+        }
+
+        .discord-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 2px solid var(--dourado);
+        }
+
+        .discord-online {
+            color: #57F287;
+            margin: 1rem 0;
+        }
+
+        .btn-discord-side {
+            background: #5865F2;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        /* Últimas do Discord */
+        .discord-message {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--cinza);
+        }
+
+        .discord-message:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            background: var(--cinza);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-user {
+            font-weight: 600;
+            color: var(--azul-escuro);
+            margin-bottom: 0.25rem;
+        }
+
+        .message-text {
+            color: var(--cinza-escuro);
+            font-size: 0.9rem;
+        }
+
+        .message-time {
+            color: var(--cinza-escuro);
+            font-size: 0.7rem;
+        }
+
+        /* Calendário */
+        .evento-item {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .evento-item:hover {
+            background: var(--cinza-claro);
+        }
+
+        .evento-data {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+            min-width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .evento-dia {
+            font-size: 1.2rem;
+        }
+
+        .evento-mes {
+            font-size: 0.7rem;
+        }
+
+        .evento-info h4 {
+            color: var(--azul-escuro);
+            margin-bottom: 0.25rem;
+        }
+
+        .evento-info p {
+            color: var(--cinza-escuro);
+            font-size: 0.9rem;
+        }
+
+        /* Categorias */
+        .categoria-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--cinza);
+        }
+
+        .categoria-item:last-child {
+            border-bottom: none;
+        }
+
+        .categoria-nome {
+            color: var(--azul-escuro);
+        }
+
+        .categoria-count {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Newsletter */
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            padding: 0.8rem;
+            border: 2px solid var(--cinza);
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--dourado);
+        }
+
+        .btn-newsletter {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--preto);
+            color: var(--branco);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 3px solid var(--dourado);
+        }
+
+        /* Responsivo */
+        @media (max-width: 900px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .discord-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .discord-info {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .user-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .post-header {
+                flex-wrap: wrap;
+            }
+            
+            .post-badge {
+                margin-left: 0;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="dashboard.html" class="logo">INTELECTA</a>
+            <div class="user-menu">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="grupos.html">Grupos</a>
+                <a href="atualizacoes.html" class="ativo">Atualizações</a>
+                <a href="#">Perfil</a>
+                <div class="user-info">
+                    <span class="user-nome" id="userNome">Carregando...</span>
+                    <button class="btn-sair" onclick="sair()">Sair</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Cabeçalho -->
+        <div class="page-header">
+            <h1>Atualizações <span>Intelecta</span></h1>
+            <p>Fica por dentro das novidades, eventos e atualizações da comunidade</p>
+        </div>
+
+        <!-- Banner Discord -->
+        <div class="discord-banner">
+            <div class="discord-info">
+                <div class="discord-icon">🎮</div>
+                <div class="discord-text">
+                    <h2>Comunidade no Discord</h2>
+                    <p>Junta-te a mais de 500 estudantes no nosso servidor</p>
+                </div>
+            </div>
+            <div class="discord-stats">
+                <div class="stat">
+                    <div class="stat-number">234</div>
+                    <div class="stat-label">Online</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">512</div>
+                    <div class="stat-label">Membros</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Canais</div>
+                </div>
+            </div>
+            <button class="btn-discord" onclick="window.open('https://discord.gg/intelecta', '_blank')">
+                <span>🎮</span> Entrar no Discord
+            </button>
+        </div>
+
+        <!-- Layout principal -->
+        <div class="layout">
+            <!-- Feed de atualizações -->
+            <div class="feed" id="feedAtualizacoes">
+                <!-- 
+                    ====================================================
+                    PUBLICAÇÕES - COMENTADAS PARA ATIVAÇÃO RÁPIDA
+                    ====================================================
+                    Para publicar: Remove o comentário e a vírgula do post anterior
+                -->
+
+                
+                <!-- PUBLICAÇÃO 1 - LANÇAMENTO -->
+                <!--
+                <div class="post destaque">
+                    <div class="post-header">
+                        <div class="post-author-img">TR</div>
+                        <div class="post-author-info">
+                            <h3>Teruma Rodrigues</h3>
+                            <div class="post-meta">
+                                <span>📅 24 Fevereiro 2026</span>
+                                <span>👤 Fundador</span>
+                            </div>
+                        </div>
+                        <div class="post-badge">🚀 NOVO</div>
+                    </div>
+                    <div class="post-content">
+                        <h2 class="post-title">
+                            <a href="#">Lançamento Oficial da Intelecta 🎉</a>
+                        </h2>
+                        <p class="post-text">
+                            É com enorme satisfação que anunciamos o lançamento oficial da Intelecta - a primeira plataforma 
+                            moçambicana dedicada exclusivamente a conectar estudantes académicos! 🚀<br><br>
+                            A nossa missão é simples: criar um espaço onde possam partilhar conhecimento, formar grupos de estudo 
+                            e construir networking académico de qualidade. Tudo 100% gratuito e sem anúncios.<br><br>
+                            O que podes encontrar agora:
+                            <br>• Grupos de estudo por área
+                            <br>• Comunidade no Discord com +500 membros
+                            <br>• Perfil académico personalizado
+                            <br>• E muito mais por vir!<br><br>
+                            Junta-te a nós nesta jornada! 💪
+                        </p>
+                        <div class="post-tags">
+                            <span class="tag">#Lançamento</span>
+                            <span class="tag">#Intelecta</span>
+                            <span class="tag">#Educação</span>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span class="stat-item">❤️ 234</span>
+                            <span class="stat-item">💬 45</span>
+                            <span class="stat-item">🔄 23</span>
+                        </div>
+                        <a href="#" class="btn-post">Ler mais</a>
+                    </div>
+                </div>
+                -->
+
+                <!-- PUBLICAÇÃO 2 - NOVOS GRUPOS -->
+                <!--
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author-img">📚</div>
+                        <div class="post-author-info">
+                            <h3>Equipa Intelecta</h3>
+                            <div class="post-meta">
+                                <span>📅 20 Fevereiro 2026</span>
+                                <span>👤 Comunidade</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <h2 class="post-title">
+                            <a href="#">Novos Grupos de Estudo Disponíveis</a>
+                        </h2>
+                        <p class="post-text">
+                            Adicionámos 5 novos grupos de estudo à plataforma! Agora tens ainda mais opções para encontrar 
+                            o teu grupo ideal:<br><br>
+                            ✅ Engenharia Civil - UEM<br>
+                            ✅ Direito Constitucional - UJC<br>
+                            ✅ Programação Web - Comunidade<br>
+                            ✅ Matemática Pura - UP<br>
+                            ✅ Economia e Mercados - ISCTEM<br><br>
+                            Explora agora na secção "Grupos" e junta-te ao que mais se adequa ao teu curso!
+                        </p>
+                        <div class="post-tags">
+                            <span class="tag">#NovosGrupos</span>
+                            <span class="tag">#Estudo</span>
+                            <span class="tag">#Comunidade</span>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span class="stat-item">❤️ 156</span>
+                            <span class="stat-item">💬 23</span>
+                        </div>
+                        <a href="grupos.html" class="btn-post">Ver grupos</a>
+                    </div>
+                </div>
+                -->
+
+                <!-- PUBLICAÇÃO 3 - EVENTO DISCORD -->
+                <!--
+                <div class="post destaque">
+                    <div class="post-header">
+                        <div class="post-author-img">🎮</div>
+                        <div class="post-author-info">
+                            <h3>Comunidade Discord</h3>
+                            <div class="post-meta">
+                                <span>📅 15 Fevereiro 2026</span>
+                                <span>👤 Evento</span>
+                            </div>
+                        </div>
+                        <div class="post-badge">📅 ESTA SEMANA</div>
+                    </div>
+                    <div class="post-content">
+                        <h2 class="post-title">
+                            <a href="#">Sessão de Estudo Coletivo - Sábado 20h</a>
+                        </h2>
+                        <img src="/api/placeholder/800/400" alt="Evento" class="post-image">
+                        <p class="post-text">
+                            Vamos realizar a primeira "Sessão de Estudo Coletivo" no Discord! 🎯<br><br>
+                            📅 Data: Sábado, 28 Fevereiro<br>
+                            ⏰ Horário: 20h - 22h<br>
+                            📍 Local: Canal #estudo-coletivo no Discord<br><br>
+                            Como funciona: Durante 2 horas, todos estudamos juntos em silêncio, com pausas para 
+                            discussão e partilha de dúvidas. No final, teremos 30 minutos de networking.<br><br>
+                            Traz os teus apontamentos e vamos estudar juntos! 💪
+                        </p>
+                        <div class="post-tags">
+                            <span class="tag">#Evento</span>
+                            <span class="tag">#EstudoColetivo</span>
+                            <span class="tag">#Discord</span>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span class="stat-item">❤️ 89</span>
+                            <span class="stat-item">💬 34</span>
+                        </div>
+                        <button class="btn-post" onclick="window.open('https://discord.gg/intelecta', '_blank')">Participar</button>
+                    </div>
+                </div>
+                -->
+
+                <!-- PUBLICAÇÃO 4 - NOVA FUNCIONALIDADE -->
+                <!--
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author-img">⚙️</div>
+                        <div class="post-author-info">
+                            <h3>Equipa Técnica</h3>
+                            <div class="post-meta">
+                                <span>📅 10 Fevereiro 2026</span>
+                                <span>👤 Desenvolvimento</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <h2 class="post-title">
+                            <a href="#">Nova Funcionalidade: Perfil Académico Completo</a>
+                        </h2>
+                        <p class="post-text">
+                            Agora podes completar ainda mais o teu perfil académico! Adicionámos:<br><br>
+                            📌 Áreas de interesse específicas<br>
+                            📌 Disciplinas que estás a estudar<br>
+                            📌 Projetos académicos<br>
+                            📌 Experiência de monitoria/tutoria<br>
+                            📌 Links para LinkedIn e GitHub<br><br>
+                            Quanto mais completo o teu perfil, melhores serão as recomendações de grupos e conexões!<br><br>
+                            Atualiza agora o teu perfil na secção "Perfil".
+                        </p>
+                        <div class="post-tags">
+                            <span class="tag">#Atualização</span>
+                            <span class="tag">#Perfil</span>
+                            <span class="tag">#Novidades</span>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span class="stat-item">❤️ 67</span>
+                            <span class="stat-item">💬 12</span>
+                        </div>
+                        <a href="#" class="btn-post">Atualizar perfil</a>
+                    </div>
+                </div>
+                -->
+
+                <!-- PUBLICAÇÃO 5 - PARCERIA -->
+                <!--
+                <div class="post destaque">
+                    <div class="post-header">
+                        <div class="post-author-img">🤝</div>
+                        <div class="post-author-info">
+                            <h3>Parcerias Intelecta</h3>
+                            <div class="post-meta">
+                                <span>📅 5 Fevereiro 2026</span>
+                                <span>👤 Parceria</span>
+                            </div>
+                        </div>
+                        <div class="post-badge">🤝 PARCERIA</div>
+                    </div>
+                    <div class="post-content">
+                        <h2 class="post-title">
+                            <a href="#">Parceria com Biblioteca Digital Moçambicana</a>
+                        </h2>
+                        <p class="post-text">
+                            Temos o prazer de anunciar a nossa mais recente parceria com a Biblioteca Digital Moçambicana!<br><br>
+                            Agora, todos os membros da Intelecta têm acesso gratuito a:<br><br>
+                            📚 +1000 livros académicos em PDF<br>
+                            📝 Artigos científicos de universidades moçambicanas<br>
+                            🎓 Teses e dissertações<br>
+                            📖 Manuais de preparação para exames<br><br>
+                            O acesso está disponível na nova secção "Biblioteca" do vosso dashboard.<br><br>
+                            Aproveitem este recurso incrível!
+                        </p>
+                        <div class="post-tags">
+                            <span class="tag">#Parceria</span>
+                            <span class="tag">#Biblioteca</span>
+                            <span class="tag">#Recursos</span>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span class="stat-item">❤️ 312</span>
+                            <span class="stat-item">💬 56</span>
+                        </div>
+                        <a href="#" class="btn-post">Aceder à biblioteca</a>
+                    </div>
+                </div>
+                -->
+
+                <!-- PUBLICACÃO PADRÃO (VISÍVEL) - Exemplo de como fica quando publicada -->
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author-img">🎉</div>
+                        <div class="post-author-info">
+                            <h3>Equipa Intelecta</h3>
+                            <div class="post-meta">
+                                <span>📅 24 Fevereiro 2026</span>
+                                <span>👤 Atualização</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <h2 class="post-title">
+                            <a href="#">Bem-vindo à página de Atualizações!</a>
+                        </h2>
+                        <p class="post-text">
+                            Esta é a nova página de atualizações da Intelecta. Aqui vais encontrar todas as novidades, 
+                            eventos e anúncios importantes sobre a plataforma e a nossa comunidade no Discord.<br><br>
+                            Fica atento porque em breve teremos muitas novidades!<br><br>
+                            Enquanto isso, explora os grupos de estudo e junta-te à conversa no Discord.
+                        </p>
+                        <div class="post-tags">
+                            <span class="tag">#BoasVindas</span>
+                            <span class="tag">#Novidade</span>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <span class="stat-item">❤️ 0</span>
+                            <span class="stat-item">💬 0</span>
+                        </div>
+                        <a href="#" class="btn-post">Saber mais</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Comunidade no Discord -->
+                <div class="sidebar-card discord-widget">
+                    <h3>🎮 <span>Discord</span></h3>
+                    <div class="discord-members">
+                        <div class="member-avatar">👤</div>
+                        <div class="member-avatar">👤</div>
+                        <div class="member-avatar">👤</div>
+                        <div class="member-avatar">👤</div>
+                        <div class="member-avatar">👤</div>
+                        <div class="member-avatar">+15</div>
+                    </div>
+                    <div class="discord-online">🟢 234 online agora</div>
+                    <button class="btn-discord-side" onclick="window.open('https://discord.gg/intelecta', '_blank')">
+                        Entrar no Discord
+                    </button>
+                </div>
+
+                <!-- Últimas mensagens do Discord -->
+                <div class="sidebar-card">
+                    <h3>💬 <span>Últimas no Discord</span></h3>
+                    
+                    <div class="discord-message">
+                        <div class="message-avatar">👨‍🎓</div>
+                        <div class="message-content">
+                            <div class="message-user">Carlos_M</div>
+                            <div class="message-text">Alguém tem apontamentos de Cálculo I?</div>
+                            <div class="message-time">há 5 minutos</div>
+                        </div>
+                    </div>
+
+                    <div class="discord-message">
+                        <div class="message-avatar">👩‍🔬</div>
+                        <div class="message-content">
+                            <div class="message-user">Ana_Silva</div>
+                            <div class="message-text">Grupo de estudo de Anatomia hoje às 18h?</div>
+                            <div class="message-time">há 23 minutos</div>
+                        </div>
+                    </div>
+
+                    <div class="discord-message">
+                        <div class="message-avatar">👨‍💻</div>
+                        <div class="message-content">
+                            <div class="message-user">Pedro_L</div>
+                            <div class="message-text">Alguém para fazer par no projeto de POO?</div>
+                            <div class="message-time">há 1 hora</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Próximos eventos -->
+                <div class="sidebar-card">
+                    <h3>📅 <span>Próximos eventos</span></h3>
+                    
+                    <div class="evento-item">
+                        <div class="evento-data">
+                            <span class="evento-dia">28</span>
+                            <span class="evento-mes">FEV</span>
+                        </div>
+                        <div class="evento-info">
+                            <h4>Sessão de Estudo Coletivo</h4>
+                            <p>Discord • 20h</p>
+                        </div>
+                    </div>
+
+                    <div class="evento-item">
+                        <div class="evento-data">
+                            <span class="evento-dia">05</span>
+                            <span class="evento-mes">MAR</span>
+                        </div>
+                        <div class="evento-info">
+                            <h4>Webinar: Como estudar melhor</h4>
+                            <p>Online • 18h</p>
+                        </div>
+                    </div>
+
+                    <div class="evento-item">
+                        <div class="evento-data">
+                            <span class="evento-dia">12</span>
+                            <span class="evento-mes">MAR</span>
+                        </div>
+                        <div class="evento-info">
+                            <h4>Networking entre estudantes</h4>
+                            <p>Discord • 19h</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categorias -->
+                <div class="sidebar-card">
+                    <h3>📌 <span>Categorias</span></h3>
+                    
+                    <div class="categoria-item">
+                        <span class="categoria-nome">Lançamentos</span>
+                        <span class="categoria-count">3</span>
+                    </div>
+                    <div class="categoria-item">
+                        <span class="categoria-nome">Eventos</span>
+                        <span class="categoria-count">5</span>
+                    </div>
+                    <div class="categoria-item">
+                        <span class="categoria-nome">Atualizações</span>
+                        <span class="categoria-count">8</span>
+                    </div>
+                    <div class="categoria-item">
+                        <span class="categoria-nome">Parcerias</span>
+                        <span class="categoria-count">2</span>
+                    </div>
+                    <div class="categoria-item">
+                        <span class="categoria-nome">Comunidade</span>
+                        <span class="categoria-count">12</span>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="sidebar-card">
+                    <h3>✉️ <span>Newsletter</span></h3>
+                    <p style="color: var(--cinza-escuro); font-size: 0.9rem; margin-bottom: 1rem;">
+                        Recebe as novidades diretamente no teu email
+                    </p>
+                    <div class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="teu@email.com">
+                        <button class="btn-newsletter" onclick="alert('Funcionalidade em breve!')">Subscrever</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Intelecta - Conectando estudantes moçambicanos</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== VERIFICAÇÃO DE SESSÃO ==============
+      const sessao = JSON.parse(localStorage.getItem('sessao'));
+        
+        if (!sessao) {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('userNome').textContent = sessao.nome;
+
+        // ==================== FUNÇÕES DE SESSÃO ====================
+        function sair() {
+            localStorage.removeItem('sessao');
+            window.location.href = 'index.html';
+        }
+
+        // ==================== FUNÇÕES PARA GERIR PUBLICAÇÕES ====================
+        // Array com as publicações (quando quiseres publicar, adiciona ao array)
+        const publicacoes = [
+            {
+                id: 1,
+                titulo: "Lançamento Oficial da Intelecta 🎉",
+                conteudo: "É com enorme satisfação que anunciamos o lançamento oficial da Intelecta...",
+                autor: "Teruma Rodrigues",
+                cargo: "Fundador",
+                data: "24 Fevereiro 2026",
+                destaque: true,
+                badge: "🚀 NOVO",
+                tags: ["#Lançamento", "#Intelecta", "#Educação"],
+                likes: 234,
+                comentarios: 45,
+                compartilhamentos: 23
+            },
+            {
+                id: 2,
+                titulo: "Novos Grupos de Estudo Disponíveis",
+                conteudo: "Adicionámos 5 novos grupos de estudo à plataforma!...",
+                autor: "Equipa Intelecta",
+                cargo: "Comunidade",
+                data: "20 Fevereiro 2026",
+                destaque: false,
+                tags: ["#NovosGrupos", "#Estudo", "#Comunidade"],
+                likes: 156,
+                comentarios: 23,
+                compartilhamentos: 0
+            }
+        ];
+
+        // Função para adicionar nova publicação (quando quiseres publicar)
+        function adicionarPublicacao(titulo, conteudo, autor, cargo, tags, destaque = false) {
+            const feed = document.getElementById('feedAtualizacoes');
+            const novaPublicacao = document.createElement('div');
+            novaPublicacao.className = `post ${destaque ? 'destaque' : ''}`;
+            
+            // Aqui constróis o HTML da nova publicação
+            // Por enquanto, usa o sistema de comentários no HTML
+        }
+    </script>
+</body>
+</html>
