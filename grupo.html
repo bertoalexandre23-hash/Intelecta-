@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Grupos de Estudo - Intelecta</title>
     <style>
         * {
@@ -14,6 +14,7 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #F5F7FA;
+            overflow-x: hidden;
         }
 
         :root {
@@ -29,79 +30,129 @@
             --cinza-escuro: #4A5568;
         }
 
-        /* Header */
+        /* HEADER COMPACTO COM MENU HAMBÚRGUER */
         header {
             background: var(--azul-escuro);
-            padding: 1rem 0;
-            border-bottom: 3px solid var(--dourado);
+            padding: 0.6rem 0;
+            border-bottom: 2px solid var(--dourado);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            width: 100%;
         }
 
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 0 2rem;
+            width: 100%;
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 50px;
+            position: relative;
         }
 
         .logo {
             color: var(--dourado);
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 800;
             text-decoration: none;
             letter-spacing: -0.02em;
+            z-index: 1001;
         }
 
-        .user-menu {
+        /* Menu Hambúrguer */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 0;
+            position: relative;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background: var(--dourado);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .hamburger.ativo span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+
+        .hamburger.ativo span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.ativo span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+        }
+
+        /* Navegação Desktop */
+        .nav-links {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
-        .user-menu a {
+        .nav-links a {
             color: var(--branco);
             text-decoration: none;
             font-weight: 500;
+            font-size: 0.95rem;
             transition: color 0.3s;
+            padding: 0.25rem 0;
+            white-space: nowrap;
         }
 
-        .user-menu a:hover {
+        .nav-links a:hover {
             color: var(--dourado);
         }
 
-        .user-menu a.ativo {
+        .nav-links a.ativo {
             color: var(--dourado);
             border-bottom: 2px solid var(--dourado);
-            padding-bottom: 0.25rem;
         }
 
         .user-info {
             display: flex;
             align-items: center;
             gap: 1rem;
-            color: var(--branco);
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 1px solid rgba(255,255,255,0.2);
         }
 
         .user-nome {
             color: var(--dourado);
             font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         .btn-sair {
             background: transparent;
-            border: 2px solid var(--dourado);
+            border: 1.5px solid var(--dourado);
             color: var(--dourado);
-            padding: 0.5rem 1.5rem;
+            padding: 0.3rem 1rem;
             border-radius: 50px;
             cursor: pointer;
+            font-size: 0.8rem;
             transition: all 0.3s;
+            white-space: nowrap;
         }
 
         .btn-sair:hover {
@@ -109,14 +160,37 @@
             color: var(--azul-escuro);
         }
 
-        /* Main */
-        main {
-            padding: 2rem 0;
+        /* Overlay para mobile */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
-        /* Título da página */
+        .overlay.ativo {
+            display: block;
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Main - ESPAÇO AUMENTADO ENTRE HEADER E TÍTULO */
+        main {
+            padding: 4rem 0 3rem 0; /* Aumentado de 3rem para 4rem */
+            min-height: calc(100vh - 130px);
+        }
+
+        /* Cabeçalho da página */
         .page-header {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem; /* Aumentado de 2.5rem para 3rem */
+            text-align: center;
         }
 
         .page-header h1 {
@@ -132,267 +206,207 @@
         .page-header p {
             color: var(--cinza-escuro);
             font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Barra de busca e filtros */
-        .search-section {
-            background: var(--branco);
+        /* Banner informativo */
+        .info-banner {
+            background: linear-gradient(135deg, var(--azul-escuro), var(--preto));
             border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--cinza);
-        }
-
-        .search-bar {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .search-input {
-            flex: 1;
-            position: relative;
-        }
-
-        .search-input input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid var(--cinza);
-            border-radius: 15px;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .search-input input:focus {
-            outline: none;
-            border-color: var(--dourado);
-            box-shadow: 0 0 0 4px rgba(207,175,78,0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--cinza-escuro);
-        }
-
-        .filtros {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .filtro-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filtro-group select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--cinza);
-            border-radius: 10px;
-            font-size: 0.95rem;
-            background: var(--branco);
-            cursor: pointer;
-        }
-
-        .filtro-group select:focus {
-            outline: none;
-            border-color: var(--dourado);
-        }
-
-        .filtro-ativo {
-            display: inline-block;
-            background: rgba(207,175,78,0.1);
-            color: var(--dourado-escuro);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
+            padding: 2.5rem; /* Aumentado padding */
+            margin-bottom: 3.5rem; /* Aumentado margem */
+            text-align: center;
             border: 1px solid var(--dourado);
+            box-shadow: 0 10px 20px rgba(207,175,78,0.15);
         }
 
-        .filtro-ativo button {
-            background: none;
-            border: none;
-            margin-left: 0.5rem;
-            color: var(--dourado-escuro);
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* Estatísticas */
-        .stats-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .result-count {
-            color: var(--cinza-escuro);
-        }
-
-        .result-count strong {
+        .info-banner h2 {
             color: var(--dourado);
-            font-size: 1.2rem;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
         }
 
-        .view-options {
-            display: flex;
-            gap: 0.5rem;
+        .info-banner p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
         }
 
-        .view-btn {
-            padding: 0.5rem 1rem;
-            border: 2px solid var(--cinza);
-            border-radius: 8px;
-            background: var(--branco);
+        .btn-destacado {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s;
+            display: inline-block;
+            text-decoration: none;
         }
 
-        .view-btn.ativo {
-            border-color: var(--dourado);
-            color: var(--dourado);
+        .btn-destacado:hover {
+            background: var(--dourado-claro);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(207,175,78,0.3);
         }
 
-        /* Grid de grupos */
-        .grupos-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+        /* Grupo único - ESPAÇO EXTRA PARA O CARD */
+        .grupo-unico {
+            max-width: 800px;
+            margin: 0 auto 2rem; /* Margem inferior adicionada */
         }
 
-        /* Card de grupo */
         .grupo-card {
             background: var(--branco);
-            border-radius: 20px;
+            border-radius: 30px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border: 2px solid var(--dourado);
             transition: all 0.3s;
-            border: 1px solid var(--cinza);
-            cursor: pointer;
+            margin-top: 1rem; /* Espaço extra acima do card */
         }
 
         .grupo-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(207,175,78,0.15);
-            border-color: var(--dourado);
-        }
-
-        .grupo-card.destaque {
-            border: 2px solid var(--dourado);
+            box-shadow: 0 20px 40px rgba(207,175,78,0.2);
         }
 
         .card-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--cinza);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            background: linear-gradient(135deg, var(--azul-escuro), var(--preto));
+            padding: 2.5rem 2rem 2rem; /* Aumentado padding superior */
+            text-align: center;
+            border-bottom: 3px solid var(--dourado);
         }
 
         .grupo-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--azul-escuro);
-            color: var(--dourado);
-            border-radius: 15px;
+            width: 100px;
+            height: 100px;
+            background: var(--dourado);
+            color: var(--azul-escuro);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 3rem;
             font-weight: bold;
+            margin: 0 auto 1.5rem; /* Aumentado margem inferior */
+            border: 4px solid var(--branco);
         }
 
-        .grupo-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .card-header h2 {
+            color: var(--dourado);
+            font-size: 2rem;
+            margin-bottom: 0.75rem; /* Aumentado margem */
         }
 
-        .grupo-titulo h3 {
-            color: var(--azul-escuro);
-            margin-bottom: 0.25rem;
-        }
-
-        .grupo-area {
+        .card-header .badge {
             display: inline-block;
-            background: rgba(207,175,78,0.1);
-            color: var(--dourado-escuro);
-            padding: 0.25rem 1rem;
+            background: rgba(255,255,255,0.2);
+            color: var(--branco);
+            padding: 0.4rem 1.8rem; /* Aumentado padding */
             border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.95rem; /* Aumentado fonte */
+            border: 1px solid var(--dourado);
+            margin-top: 0.5rem; /* Espaço extra acima do badge */
+            margin-bottom: 0.5rem; /* Espaço extra abaixo do badge */
         }
 
         .card-body {
-            padding: 1.5rem;
+            padding: 2.5rem; /* Aumentado padding */
         }
 
-        .grupo-descricao {
-            color: var(--cinza-escuro);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            line-height: 1.5;
+        .info-section {
+            margin-bottom: 2.5rem; /* Aumentado margem entre seções */
         }
 
-        .grupo-meta {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
+        .info-section:last-child {
+            margin-bottom: 0;
         }
 
-        .meta-item {
+        .info-section h3 {
+            color: var(--azul-escuro);
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem; /* Aumentado margem */
             display: flex;
             align-items: center;
-            gap: 0.25rem;
-            font-size: 0.9rem;
-            color: var(--cinza-escuro);
+            gap: 0.5rem;
+            border-left: 4px solid var(--dourado);
+            padding-left: 1rem;
         }
 
-        .meta-item strong {
+        .info-section h3 span {
             color: var(--dourado);
         }
 
-        .grupo-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+        .info-section p {
+            color: var(--cinza-escuro);
+            line-height: 1.8;
+            font-size: 1rem;
             margin-bottom: 1rem;
+        }
+
+        .detalhes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0 2.5rem; /* Aumentado margem */
+            text-align: center;
+        }
+
+        .detalhe-item {
+            background: var(--cinza-claro);
+            padding: 1.5rem; /* Aumentado padding */
+            border-radius: 15px;
+        }
+
+        .detalhe-valor {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dourado);
+        }
+
+        .detalhe-label {
+            color: var(--cinza-escuro);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        .tags-container {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0 1rem; /* Ajustado margem */
         }
 
         .tag {
             background: var(--cinza-claro);
             color: var(--azul-escuro);
-            padding: 0.25rem 0.75rem;
+            padding: 0.6rem 1.4rem; /* Aumentado padding */
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.95rem; /* Aumentado fonte */
+            font-weight: 500;
+            border: 1px solid var(--cinza);
         }
 
         .card-footer {
-            padding: 1.5rem;
-            border-top: 1px solid var(--cinza);
+            padding: 2.5rem; /* Aumentado padding */
+            border-top: 2px solid var(--cinza);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center;
         }
 
         .btn-grupo {
             background: var(--dourado);
             color: var(--azul-escuro);
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
+            padding: 1.2rem 4rem; /* Aumentado padding */
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem; /* Aumentado fonte */
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
@@ -402,138 +416,7 @@
         .btn-grupo:hover {
             background: var(--dourado-claro);
             transform: scale(1.05);
-        }
-
-        .btn-outline-grupo {
-            background: transparent;
-            border: 2px solid var(--dourado);
-            color: var(--dourado);
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-outline-grupo:hover {
-            background: var(--dourado);
-            color: var(--azul-escuro);
-        }
-
-        .membros-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .membros-avatars {
-            display: flex;
-        }
-
-        .membro-avatar {
-            width: 30px;
-            height: 30px;
-            background: var(--cinza);
-            border-radius: 50%;
-            border: 2px solid var(--branco);
-            margin-left: -8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            color: var(--azul-escuro);
-        }
-
-        .membro-avatar:first-child {
-            margin-left: 0;
-        }
-
-        /* Load more */
-        .load-more {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .btn-load-more {
-            background: transparent;
-            border: 2px solid var(--dourado);
-            color: var(--dourado);
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-load-more:hover {
-            background: var(--dourado);
-            color: var(--azul-escuro);
-        }
-
-        /* Modal de detalhes do grupo */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.ativo {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--branco);
-            border-radius: 30px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, var(--azul-escuro), var(--preto));
-            padding: 2rem;
-            color: var(--branco);
-            border-bottom: 3px solid var(--dourado);
-        }
-
-        .modal-header h2 {
-            color: var(--dourado);
-            margin-bottom: 0.5rem;
-        }
-
-        .modal-body {
-            padding: 2rem;
-        }
-
-        .modal-footer {
-            padding: 2rem;
-            border-top: 1px solid var(--cinza);
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn-fechar {
-            background: var(--cinza);
-            color: var(--azul-escuro);
-            border: none;
-            padding: 1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            flex: 1;
+            box-shadow: 0 10px 20px rgba(207,175,78,0.3);
         }
 
         /* Footer */
@@ -541,147 +424,308 @@
             background: var(--preto);
             color: var(--branco);
             text-align: center;
-            padding: 2rem 0;
-            border-top: 3px solid var(--dourado);
+            padding: 2rem 0; /* Aumentado padding */
+            border-top: 2px solid var(--dourado);
+            font-size: 0.9rem;
         }
 
-        /* Responsivo */
-        @media (max-width: 1024px) {
-            .grupos-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
+        /* ========== RESPONSIVIDADE ========== */
         @media (max-width: 768px) {
-            .header-content {
+            /* Ativar menu hambúrguer */
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -280px;
+                width: 280px;
+                height: 100vh;
+                background: var(--azul-escuro);
                 flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                padding: 80px 2rem 2rem;
+                transition: right 0.3s ease;
+                z-index: 999;
+                border-left: 2px solid var(--dourado);
+                gap: 1.2rem;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+            
+            .nav-links.ativo {
+                right: 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.1rem;
+                width: 100%;
+                padding: 0.5rem 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .user-info {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                width: 100%;
                 gap: 1rem;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(255,255,255,0.2);
             }
             
-            .user-menu {
-                flex-wrap: wrap;
-                justify-content: center;
+            .user-nome {
+                font-size: 1rem;
             }
             
-            .search-bar {
-                flex-direction: column;
+            .btn-sair {
+                width: 100%;
+                text-align: center;
             }
             
-            .filtros {
-                flex-direction: column;
+            .container {
+                padding: 0 1.5rem;
             }
             
-            .grupos-grid {
-                grid-template-columns: 1fr;
+            /* Ajustes responsivos para espaços */
+            main {
+                padding: 3rem 0 2rem 0;
+            }
+            
+            .page-header {
+                margin-bottom: 2rem;
             }
             
             .page-header h1 {
                 font-size: 2rem;
             }
+            
+            .info-banner {
+                padding: 1.8rem;
+                margin-bottom: 2.5rem;
+            }
+            
+            .info-banner h2 {
+                font-size: 1.5rem;
+            }
+            
+            .detalhes-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin: 1.5rem 0;
+            }
+            
+            .card-body {
+                padding: 1.8rem;
+            }
+            
+            .card-header {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+            
+            .grupo-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .btn-grupo {
+                padding: 1rem 2.5rem;
+                font-size: 1.1rem;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .info-banner {
+                padding: 1.5rem;
+            }
+            
+            .btn-destacado {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+                width: 100%;
+            }
+            
+            .card-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .grupo-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                width: 250px;
+                right: -250px;
+                padding: 70px 1.5rem 1.5rem;
+            }
+            
+            .info-section h3 {
+                font-size: 1.2rem;
+            }
+            
+            .tag {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .hamburger {
+                width: 25px;
+                height: 18px;
+            }
+            
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- HEADER COM MENU HAMBÚRGUER -->
+   
     <header>
         <div class="container header-content">
             <a href="dashboard.html" class="logo">INTELECTA</a>
-            <div class="user-menu">
+            
+            <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav class="nav-links" id="navLinks">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="grupos.html" class="ativo">Grupos</a>
-                <a href="#">Networking</a>
-                <a href="#">Perfil</a>
+                <a href="atualizacoes.html">Atualizações</a>
+                <a href="criar-perfil.html">Perfil</a>
+                
                 <div class="user-info">
                     <span class="user-nome" id="userNome">Carregando...</span>
                     <button class="btn-sair" onclick="sair()">Sair</button>
                 </div>
-            </div>
+            </nav>
         </div>
     </header>
 
+    <!-- Overlay para mobile -->
+    <div class="overlay" id="overlay"></div>
+
     <main class="container">
-        <!-- Cabeçalho da página -->
+        <!-- Cabeçalho da página - MAIS ESPAÇO DO HEADER -->
+        <br>
         <div class="page-header">
             <h1>Grupos de <span>Estudo</span></h1>
-            <p>Encontra o grupo perfeito para crescer academicamente com outros estudantes</p>
+            <p>Conecta-te com outros estudantes no nosso Discord</p>
         </div>
 
-        <!-- Barra de busca e filtros -->
-        <div class="search-section">
-            <div class="search-bar">
-                <div class="search-input">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" id="busca" placeholder="Pesquisar grupos por nome, área, universidade..." onkeyup="filtrarGrupos()">
-                </div>
-            </div>
-
-            <div class="filtros">
-                <div class="filtro-group">
-                    <select id="filtroArea" onchange="filtrarGrupos()">
-                        <option value="">Todas as áreas</option>
-                        <option value="Medicina">Medicina</option>
-                        <option value="Engenharia">Engenharia</option>
-                        <option value="Direito">Direito</option>
-                        <option value="Computação">Computação</option>
-                        <option value="Economia">Economia</option>
-                        <option value="Matemática">Matemática</option>
-                        <option value="Física">Física</option>
-                        <option value="Química">Química</option>
-                        <option value="Biologia">Biologia</option>
-                    </select>
-                </div>
-
-                <div class="filtro-group">
-                    <select id="filtroUniversidade" onchange="filtrarGrupos()">
-                        <option value="">Todas as universidades</option>
-                        <option value="UEM">UEM</option>
-                        <option value="UJC">UJC</option>
-                        <option value="UP">UP</option>
-                        <option value="UniLurio">UniLúrio</option>
-                        <option value="ISCTEM">ISCTEM</option>
-                    </select>
-                </div>
-
-                <div class="filtro-group">
-                    <select id="filtroTipo" onchange="filtrarGrupos()">
-                        <option value="">Todos os tipos</option>
-                        <option value="Publico">Público</option>
-                        <option value="Privado">Privado</option>
-                        <option value="Destaque">Em destaque</option>
-                    </select>
-                </div>
-            </div>
-
-            <div id="filtrosAtivos" style="margin-top: 1rem;"></div>
+        <!-- Banner informativo -->
+        <div class="info-banner">
+            <h2>🎯 Grupo Oficial Intelecta</h2>
+            <p>O nosso servidor no Discord é o ponto de encontro de todos os estudantes moçambicanos. Discussões, partilha de materiais, networking e muito mais!</p>
+            <button class="btn-destacado" onclick="window.open('https://discord.gg/intelecta', '_blank')">
+                Entrar no Discord Agora
+            </button>
         </div>
 
-        <!-- Estatísticas e visualização -->
-        <div class="stats-bar">
-            <div class="result-count" id="resultCount">
-                <strong id="totalGrupos">0</strong> grupos encontrados
-            </div>
-            <div class="view-options">
-                <button class="view-btn ativo" onclick="mudarVisualizacao('grid')">📱 Grid</button>
-                <button class="view-btn" onclick="mudarVisualizacao('lista')">📋 Lista</button>
-            </div>
-        </div>
+        <!-- Grupo único - COM ESPAÇO EXTRA -->
+        <div class="grupo-unico">
+            <div class="grupo-card">
+                <div class="card-header">
+                    <div class="grupo-icon">🎓</div>
+                    <h2>Intelecta Comunidade</h2>
+                    <span class="badge">Grupo Oficial</span>
+                </div>
+                
+                <div class="card-body">
+                    <!-- Descrição -->
+                    <div class="info-section">
+                        <h3><span>Sobre</span> o grupo</h3>
+                        <p>
+                            Este é o grupo principal da Intelecta no Discord. Um espaço dedicado a todos os estudantes moçambicanos que querem partilhar conhecimento, tirar dúvidas, encontrar grupos de estudo e construir networking académico de qualidade.
+                        </p>
+                        <p>
+                            Aqui encontras canais organizados por área de estudo, sessões de estudo coletivo, partilha de materiais e uma comunidade ativa e acolhedora.
+                        </p>
+                    </div>
 
-        <!-- Grid de grupos -->
-        <div class="grupos-grid" id="gruposContainer">
-            <!-- Grupos serão carregados aqui via JavaScript -->
-        </div>
+                       <!-- Estatísticas -->
+                    <div class="detalhes-grid">
+                        <div class="detalhe-item">
+                            <div class="detalhe-valor">500+</div>
+                            <div class="detalhe-label">Membros</div>
+                        </div>
+                        <div class="detalhe-item">
+                            <div class="detalhe-valor">15</div>
+                            <div class="detalhe-label">Canais</div>
+                        </div>
+                        <div class="detalhe-item">
+                            <div class="detalhe-valor">24/7</div>
+                            <div class="detalhe-label">Ativo</div>
+                        </div>
+                    </div>
 
-        <!-- Botão carregar mais -->
-        <div class="load-more" id="loadMoreBtn">
-            <button class="btn-load-more" onclick="carregarMais()">Carregar mais grupos</button>
+                    <!-- Tags / Áreas -->
+                    <div class="info-section">
+                        <h3><span>Áreas</span> de estudo</h3>
+                        <div class="tags-container">
+                            <span class="tag">Medicina</span>
+                            <span class="tag">Engenharia</span>
+                            <span class="tag">Direito</span>
+                            <span class="tag">Computação</span>
+                            <span class="tag">Economia</span>
+                            <span class="tag">Matemática</span>
+                            <span class="tag">Física</span>
+                            <span class="tag">Química</span>
+                            <span class="tag">Biologia</span>
+                            <span class="tag">Letras</span>
+                        </div>
+                    </div>
+
+                    <!-- O que encontrarás -->
+                    <div class="info-section">
+                        <h3><span>O que</span> vais encontrar</h3>
+                        <p>
+                            ✅ Canais organizados por curso<br>
+                            ✅ Sessões de estudo coletivo<br>
+                            ✅ Partilha de materiais e apontamentos<br>
+                            ✅ Networking com outros estudantes<br>
+                            ✅ Discussões académicas<br>
+                            ✅ Eventos e webinars<br>
+                            ✅ Suporte para dúvidas
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button class="btn-grupo" onclick="window.open('https://discord.gg/intelecta', '_blank')">
+                        Entrar no Grupo →
+                    </button>
+                </div>
+            </div>
         </div>
     </main>
-
-    <!-- Modal de detalhes do grupo -->
-    <div class="modal" id="grupoModal">
-        <div class="modal-content" id="modalContent">
-            <!-- Conteúdo carregado via JS -->
-        </div>
-    </div>
 
     <footer>
         <div class="container">
@@ -699,351 +743,65 @@
 
         document.getElementById('userNome').textContent = sessao.nome;
 
-        // ==================== BASE DE DADOS DE GRUPOS ====================
-        const grupos = [
-            {
-                id: 1,
-                nome: "Medicina UEM - 2026",
-                area: "Medicina",
-                universidade: "UEM",
-                tipo: "Publico",
-                destaque: true,
-                descricao: "Grupo de estudos para estudantes de medicina da UEM. Discussões de casos clínicos, preparação para exames e partilha de materiais.",
-                membros: 234,
-                vagas: 50,
-                tags: ["Anatomia", "Fisiologia", "Semiologia"],
-                imagem: null,
-                cor: "#0A1929"
-            },
-            {
-                id: 2,
-                nome: "Programação Competitiva",
-                area: "Computação",
-                universidade: "UJC",
-                tipo: "Publico",
-                destaque: false,
-                descricao: "Treino para competições de programação (ICP, Maratona). Algoritmos, estruturas de dados e resolução de problemas.",
-                membros: 156,
-                vagas: 20,
-                tags: ["Algoritmos", "Python", "C++"],
-                imagem: null
-            },
-            {
-                id: 3,
-                nome: "Direito Constitucional",
-                area: "Direito",
-                universidade: "UP",
-                tipo: "Privado",
-                destaque: false,
-                descricao: "Grupo focado em direito constitucional moçambicano. Análise de jurisprudência e preparação para exame da ordem.",
-                membros: 89,
-                vagas: 10,
-                tags: ["Constituição", "Direitos Humanos", "Jurisprudência"],
-                imagem: null
-            },
-            {
-                id: 4,
-                nome: "Engenharia Civil - Materiais",
-                area: "Engenharia",
-                universidade: "UEM",
-                tipo: "Publico",
-                destaque: true,
-                descricao: "Discussão sobre materiais de construção, resistência dos materiais e novas tecnologias na engenharia civil.",
-                membros: 167,
-                vagas: 30,
-                tags: ["Concreto", "Estruturas", "Materiais"],
-                imagem: null
-            },
-            {
-                id: 5,
-                nome: "Matemática Pura",
-                area: "Matemática",
-                universidade: "UJC",
-                tipo: "Publico",
-                destaque: false,
-                descricao: "Grupo para amantes da matemática. Cálculo, álgebra linear, geometria analítica e desafios matemáticos.",
-                membros: 112,
-                vagas: 15,
-                tags: ["Cálculo", "Álgebra", "Geometria"],
-                imagem: null
-            },
-            {
-                id: 6,
-                nome: "Física Moderna",
-                area: "Física",
-                universidade: "UEM",
-                tipo: "Privado",
-                destaque: false,
-                descricao: "Estudo de física quântica, relatividade e áreas avançadas da física. Grupo com encontros semanais.",
-                membros: 45,
-                vagas: 5,
-                tags: ["Quântica", "Relatividade", "Termodinâmica"],
-                imagem: null
-            },
-            {
-                id: 7,
-                nome: "Economia e Mercados",
-                area: "Economia",
-                universidade: "ISCTEM",
-                tipo: "Publico",
-                destaque: true,
-                descricao: "Análise de mercados, micro e macroeconomia. Discussão sobre a economia moçambicana e internacional.",
-                membros: 198,
-                vagas: 25,
-                tags: ["Microeconomia", "Mercados", "Investimentos"],
-                imagem: null
-            },
-            {
-                id: 8,
-                nome: "Química Orgânica",
-                area: "Química",
-                universidade: "UP",
-                tipo: "Publico",
-                destaque: false,
-                descricao: "Grupo dedicado ao estudo da química orgânica. Mecanismos de reação, síntese e resolução de exercícios.",
-                membros: 76,
-                vagas: 20,
-                tags: ["Reações", "Compostos", "Laboratório"],
-                imagem: null
-            },
-            {
-                id: 9,
-                nome: "Biologia Molecular",
-                area: "Biologia",
-                universidade: "UniLurio",
-                tipo: "Privado",
-                destaque: false,
-                descricao: "Estudo de genética, biologia celular e molecular. Grupo de pesquisa e discussão de artigos científicos.",
-                membros: 34,
-                vagas: 8,
-                tags: ["Genética", "DNA", "Células"],
-                imagem: null
-            }
-        ];
-
-        // Variáveis de estado
-        let gruposFiltrados = [...grupos];
-        let itensPorPagina = 6;
-        let paginaAtual = 1;
-        let visualizacaoAtual = 'grid';
-
-        // ==================== FUNÇÕES DE RENDERIZAÇÃO ====================
-        function renderizarGrupos() {
-            const container = document.getElementById('gruposContainer');
-            const inicio = 0;
-            const fim = paginaAtual * itensPorPagina;
-            const gruposParaMostrar = gruposFiltrados.slice(0, fim);
-            
-            container.innerHTML = gruposParaMostrar.map(grupo => criarCardGrupo(grupo)).join('');
-            
-            // Atualizar contador
-            document.getElementById('totalGrupos').textContent = gruposFiltrados.length;
-            
-            // Mostrar/esconder botão carregar mais
-            const loadMoreBtn = document.getElementById('loadMoreBtn');
-            if (fim >= gruposFiltrados.length) {
-                loadMoreBtn.style.display = 'none';
-            } else {
-                loadMoreBtn.style.display = 'block';
-            }
-        }
-
-        function criarCardGrupo(grupo) {
-            return `
-                <div class="grupo-card ${grupo.destaque ? 'destaque' : ''}" onclick="abrirModal(${grupo.id})">
-                    <div class="card-header">
-                        <div class="grupo-icon" style="background: ${grupo.cor || '#0A1929'};">
-                            ${grupo.imagem ? `<img src="${grupo.imagem}" alt="${grupo.nome}">` : grupo.nome.charAt(0)}
-                        </div>
-                        <div class="grupo-titulo">
-                            <h3>${grupo.nome}</h3>
-                            <span class="grupo-area">${grupo.area}</span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="grupo-descricao">${grupo.descricao.substring(0, 80)}...</p>
-                        <div class="grupo-meta">
-                            <span class="meta-item">👥 <strong>${grupo.membros}</strong> membros</span>
-                            <span class="meta-item">🎓 ${grupo.universidade}</span>
-                        </div>
-                        <div class="grupo-tags">
-                            ${grupo.tags.slice(0, 3).map(tag => `<span class="tag">${tag}</span>`).join('')}
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn-grupo" onclick="event.stopPropagation(); entrarGrupo(${grupo.id})">Entrar</button>
-                        <div class="membros-info">
-                            <div class="membros-avatars">
-                                <div class="membro-avatar">👤</div>
-                                <div class="membro-avatar">👤</div>
-                                <div class="membro-avatar">👤</div>
-                            </div>
-                            <span>+${grupo.membros}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // ==================== FUNÇÕES DE FILTRO ====================
-        function filtrarGrupos() {
-            const termoBusca = document.getElementById('busca').value.toLowerCase();
-            const area = document.getElementById('filtroArea').value;
-            const universidade = document.getElementById('filtroUniversidade').value;
-            const tipo = document.getElementById('filtroTipo').value;
-
-            gruposFiltrados = grupos.filter(grupo => {
-                // Filtro por busca
-                const matchBusca = termoBusca === '' || 
-                    grupo.nome.toLowerCase().includes(termoBusca) ||
-                    grupo.descricao.toLowerCase().includes(termoBusca) ||
-                    grupo.area.toLowerCase().includes(termoBusca) ||
-                    grupo.tags.some(tag => tag.toLowerCase().includes(termoBusca));
-
-                // Filtro por área
-                const matchArea = area === '' || grupo.area === area;
-
-                // Filtro por universidade
-                const matchUniversidade = universidade === '' || grupo.universidade === universidade;
-
-                // Filtro por tipo
-                const matchTipo = tipo === '' || 
-                    (tipo === 'Destaque' ? grupo.destaque : grupo.tipo === tipo);
-
-                return matchBusca && matchArea && matchUniversidade && matchTipo;
-            });
-
-            // Resetar paginação
-            paginaAtual = 1;
-            
-            // Mostrar filtros ativos
-            mostrarFiltrosAtivos();
-            
-            // Renderizar
-            renderizarGrupos();
-        }
-
-        function mostrarFiltrosAtivos() {
-            const container = document.getElementById('filtrosAtivos');
-            const filtros = [];
-            
-            const termoBusca = document.getElementById('busca').value;
-            const area = document.getElementById('filtroArea').value;
-            const universidade = document.getElementById('filtroUniversidade').value;
-            const tipo = document.getElementById('filtroTipo').value;
-
-            if (termoBusca) filtros.push(`Busca: "${termoBusca}"`);
-            if (area) filtros.push(`Área: ${area}`);
-            if (universidade) filtros.push(`Universidade: ${universidade}`);
-            if (tipo) filtros.push(`Tipo: ${tipo}`);
-
-            if (filtros.length > 0) {
-                container.innerHTML = filtros.map(f => `
-                    <span class="filtro-ativo">
-                        ${f} <button onclick="removerFiltro('${f.split(':')[0].toLowerCase()}')">✕</button>
-                    </span>
-                `).join('');
-            } else {
-                container.innerHTML = '';
-            }
-        }
-
-        function removerFiltro(tipo) {
-            if (tipo.includes('busca')) {
-                document.getElementById('busca').value = '';
-            } else if (tipo.includes('área')) {
-                document.getElementById('filtroArea').value = '';
-            } else if (tipo.includes('universidade')) {
-                document.getElementById('filtroUniversidade').value = '';
-            } else if (tipo.includes('tipo')) {
-                document.getElementById('filtroTipo').value = '';
-            }
-            filtrarGrupos();
-        }
-
-        // ==================== FUNÇÕES DE INTERAÇÃO ====================
-        function carregarMais() {
-            paginaAtual++;
-            renderizarGrupos();
-        }
-
-        function mudarVisualizacao(tipo) {
-            visualizacaoAtual = tipo;
-            // Aqui poderia alterar o layout para lista
-            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('ativo'));
-            event.target.classList.add('ativo');
-        }
-
-        function abrirModal(id) {
-            const grupo = grupos.find(g => g.id === id);
-            const modal = document.getElementById('grupoModal');
-            const modalContent = document.getElementById('modalContent');
-
-            modalContent.innerHTML = `
-                <div class="modal-header">
-                    <h2>${grupo.nome}</h2>
-                    <p>${grupo.area} • ${grupo.universidade}</p>
-                </div>
-                <div class="modal-body">
-                    <p style="margin-bottom: 1.5rem;">${grupo.descricao}</p>
-                    
-                    <h3 style="color: var(--azul-escuro); margin-bottom: 1rem;">Informações</h3>
-                    <div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; margin-bottom: 1.5rem;">
-                        <div><strong>Membros:</strong> ${grupo.membros}</div>
-                        <div><strong>Vagas:</strong> ${grupo.vagas}</div>
-                        <div><strong>Tipo:</strong> ${grupo.tipo}</div>
-                        <div><strong>Criado em:</strong> 2024</div>
-                    </div>
-
-                    <h3 style="color: var(--azul-escuro); margin-bottom: 1rem;">Tags</h3>
-                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-                        ${grupo.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
-
-                    <h3 style="color: var(--azul-escuro); margin-bottom: 1rem;">Membros recentes</h3>
-                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
-                        <div class="membro-avatar" style="width: 40px; height: 40px;">👤</div>
-                        <div class="membro-avatar" style="width: 40px; height: 40px;">👤</div>
-                        <div class="membro-avatar" style="width: 40px; height: 40px;">👤</div>
-                        <div class="membro-avatar" style="width: 40px; height: 40px;">👤</div>
-                        <div class="membro-avatar" style="width: 40px; height: 40px;">👤</div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn-grupo" style="flex: 2;" onclick="entrarGrupo(${grupo.id})">Entrar no grupo</button>
-                    <button class="btn-fechar" style="flex: 1;" onclick="fecharModal()">Fechar</button>
-                </div>
-            `;
-
-            modal.classList.add('ativo');
-        }
-
-        function fecharModal() {
-            document.getElementById('grupoModal').classList.remove('ativo');
-        }
-
-        function entrarGrupo(id) {
-            const grupo = grupos.find(g => g.id === id);
-            alert(`A entrar no grupo "${grupo.nome}"...\nNuma versão real, serias redirecionado para o Discord.`);
-        }
-
-        // Fechar modal ao clicar fora
-        window.onclick = function(event) {
-            const modal = document.getElementById('grupoModal');
-            if (event.target === modal) {
-                modal.classList.remove('ativo');
-            }
-        };
-
-        // ==================== FUNÇÕES DE SESSÃO ====================
+        // ==================== FUNÇÃO SAIR ====================
         function sair() {
             localStorage.removeItem('sessao');
             window.location.href = 'index.html';
         }
 
-        // ==================== INICIALIZAÇÃO ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            filtrarGrupos();
+        // ==================== MENU HAMBÚRGUER ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const navLinks = document.getElementById('navLinks');
+            const overlay = document.getElementById('overlay');
+
+            if (!hamburger || !navLinks || !overlay) {
+                return;
+            }
+
+            function toggleMenu() {
+                hamburger.classList.toggle('ativo');
+                navLinks.classList.toggle('ativo');
+                overlay.classList.toggle('ativo');
+                
+                if (navLinks.classList.contains('ativo')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+
+            hamburger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            overlay.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleMenu();
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    hamburger.classList.remove('ativo');
+                    navLinks.classList.remove('ativo');
+                    overlay.classList.remove('ativo');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            navLinks.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
         });
     </script>
 </body>
