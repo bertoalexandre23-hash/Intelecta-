@@ -398,11 +398,24 @@
             font-size: 0.95rem;
         }
 
-        /* Sobre o Fundador */
+        /* Sobre o Fundador - COM CTA */
         .fundador {
             padding: 5rem 0;
             background: var(--azul-escuro);
             color: var(--branco);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fundador::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(207,175,78,0.05) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .fundador-content {
@@ -410,6 +423,8 @@
             grid-template-columns: 1fr 2fr;
             gap: 4rem;
             align-items: center;
+            position: relative;
+            z-index: 2;
         }
 
         .fundador-imagem {
@@ -426,6 +441,12 @@
             border: 5px solid var(--dourado);
             box-shadow: 0 20px 40px rgba(207, 175, 78, 0.3);
             margin: 0 auto;
+            transition: all 0.3s;
+        }
+
+        .fundador-imagem:hover {
+            transform: scale(1.05);
+            box-shadow: 0 30px 60px rgba(207, 175, 78, 0.4);
         }
 
         .fundador-texto h2 {
@@ -451,6 +472,42 @@
             color: rgba(255,255,255,0.8);
             font-size: 1.1rem;
             line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        /* CTA para conhecer a equipa */
+        .btn-equipa {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: transparent;
+            border: 2px solid var(--dourado);
+            color: var(--dourado);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+
+        .btn-equipa:hover {
+            background: var(--dourado);
+            color: var(--azul-escuro);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(207, 175, 78, 0.3);
+            gap: 1.2rem;
+        }
+
+        .btn-equipa i {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .btn-equipa:hover i {
+            transform: translateX(5px);
         }
 
         /* CTA Final */
@@ -584,6 +641,10 @@
                 gap: 2rem;
             }
             
+            .btn-equipa {
+                justify-content: center;
+            }
+            
             .func-grid {
                 grid-template-columns: 1fr;
             }
@@ -653,9 +714,10 @@
                 font-size: 2rem;
             }
             
-            .btn-primary, .btn-cta {
+            .btn-primary, .btn-cta, .btn-equipa {
                 width: 100%;
                 padding: 1rem;
+                justify-content: center;
             }
         }
 
@@ -674,7 +736,16 @@
         .fade-in-up {
             animation: fadeInUp 0.6s ease forwards;
         }
-    </style>
+        
+        .fundador-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: coveer;
+    border-radius: 50%;
+}
+</style>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -687,6 +758,7 @@
                 <a href="#missao">Missão</a>
                 <a href="#funcionalidades">Funcionalidades</a>
                 <a href="#fundador">Sobre</a>
+                <a href="equipa.html">Equipa</a>
                 <a href="login.html" class="btn-outline">Entrar</a>
                 <a href="login.html?tab=registo" class="btn-solid">Registar</a>
             </div>
@@ -699,16 +771,16 @@
             <div class="container hero-content">
                 <div class="fade-in-up">
                     <div class="hero-badge">🇲🇿 100% Gratuita para Estudantes Moçambicanos</div>
-                    <h1>O futuro da educação em <span>Moçambique</span> começa aqui.</h1>
-                    <p>Partilhe conhecimento, conecte-se com outros estudantes e cresça academicamente. Sem custos, sem anúncios — apenas educação.</p>
+                    <h1>O futuro da educação <span>Online</span> começa aqui.</h1>
+                    <p>Partilhe conhecimento, conecte-se com outros estudantes e cresça academicamente. Sem custos, sem anúncios -- apenas educação.</p>
                     
                     <div class="hero-stats">
                         <div class="stat-item">
-                            <div class="stat-number">500+</div>
+                            <div class="stat-number">50+</div>
                             <div class="stat-label">Estudantes</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">23</div>
+                            <div class="stat-number">15</div>
                             <div class="stat-label">Comunidades</div>
                         </div>
                         <div class="stat-item">
@@ -820,19 +892,27 @@
             </div>
         </section>
 
-        <!-- Sobre o Fundador -->
+        <!-- Sobre o Fundador - COM CTA -->
         <section id="fundador" class="fundador">
             <div class="container fundador-content">
                 <div class="fundador-imagem">
-                    👨‍🎓
+                <img src="logo.png" target_blank>
+                    <i class="fas fa-users" style="font-size: 5rem; color: var(--azul-escuro);"></i>
                 </div>
                 <div class="fundador-texto">
-                    <h2>Sobre o Fundador</h2>
-                    <div class="fundador-nome">Teruma Rodrigues Teruma</div>
-                    <div class="fundador-titulo">Estudante da 12ª Classe • Fundador da Intelecta</div>
-                    <p class="fundador-descricao">
-                        Movido pela convicção de que a educação transforma vidas, Teruma criou a Intelecta como uma iniciativa sem fins lucrativos para fortalecer a educação em Moçambique. O objectivo é simples: dar aos estudantes moçambicanos uma ferramenta gratuita e poderosa para aprender, partilhar e crescer juntos.
+                    <h2>Sobre os Fundadores</h2>
+                   <p class="fundador-descricao">
+                        Movidos pela convicção de que a educação transforma vidas, 2 jovens criaram a Intelecta 
+                        como uma iniciativa sem fins lucrativos para fortalecer a educação em Moçambique. 
+                        Estes dois jovens, estudantes da 12ª classe, unidos pelo sonho de dar aos estudantes 
+                        uma ferramenta gratuita e poderosa para aprender, partilhar e crescer juntos.
                     </p>
+                    
+                    <!-- CTA para conhecer a equipa -->
+                    <a href="equipa.html" class="btn-equipa">
+                        Conhece os fundadores da Intelecta
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </section>
@@ -856,6 +936,7 @@
                 <a href="#missao">Missão</a>
                 <a href="#funcionalidades">Funcionalidades</a>
                 <a href="#fundador">Sobre</a>
+                <a href="equipa.html">Equipa</a>
                 <a href="#">Termos</a>
                 <a href="#">Privacidade</a>
             </div>
@@ -864,7 +945,7 @@
             
             <!-- CTA Oculto para Criadores -->
             <div class="criadores-cta">
-                <a href="#" onclick="mostrarCriadores(event)">🔧 Conheça os criadores da Intelecta</a>
+                <a href="equipa.html">🔧 Conheça os criadores da Intelecta</a>
             </div>
         </div>
     </footer>
@@ -930,15 +1011,6 @@
         }, { threshold: 0.5 });
         
         observer.observe(heroSection);
-
-        // Função para mostrar os criadores (pode ser personalizada)
-        function mostrarCriadores(event) {
-            event.preventDefault();
-            alert('👥 Criadores da Intelecta\n\n' +
-                  'Fundador: Teruma Rodrigues Teruma\n' +
-                  'Equipa: [Adicionar nomes da equipa]\n\n' +
-                  'Uma iniciativa moçambicana para fortalecer a educação.');
-        }
 
         // Fechar menu mobile ao redimensionar para desktop
         window.addEventListener('resize', () => {
