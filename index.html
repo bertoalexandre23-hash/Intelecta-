@@ -428,25 +428,28 @@
         }
 
         .fundador-imagem {
-            background: var(--dourado);
             width: min(300px, 100%);
             height: min(300px, 100%);
             aspect-ratio: 1;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            color: var(--azul-escuro);
+            margin: 0 auto;
+            overflow: hidden;
             border: 5px solid var(--dourado);
             box-shadow: 0 20px 40px rgba(207, 175, 78, 0.3);
-            margin: 0 auto;
             transition: all 0.3s;
+            background: var(--dourado); /* cor de fallback */
         }
 
         .fundador-imagem:hover {
             transform: scale(1.05);
             box-shadow: 0 30px 60px rgba(207, 175, 78, 0.4);
+        }
+
+        .fundador-imagem img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .fundador-texto h2 {
@@ -473,6 +476,13 @@
             font-size: 1.1rem;
             line-height: 1.8;
             margin-bottom: 2rem;
+        }
+
+        .fundador-descricao mark {
+            background: rgba(207, 175, 78, 0.3);
+            color: var(--dourado-claro);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
         }
 
         /* CTA para conhecer a equipa */
@@ -721,7 +731,7 @@
             }
         }
 
-        /* Animações */
+      /* Animações */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -736,21 +746,14 @@
         .fade-in-up {
             animation: fadeInUp 0.6s ease forwards;
         }
-        
-        .fundador-imagem img {
-    width: 100%;
-    height: 100%;
-    object-fit: coveer;
-    border-radius: 50%;
-}
-</style>
+    </style>
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
         <div class="container header-content">
-            <a href="/" class="logo">INTELECTA</a>
+            <a href="index.html" class="logo">INTELECTA</a>
             
             <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
             
@@ -758,7 +761,7 @@
                 <a href="#missao">Missão</a>
                 <a href="#funcionalidades">Funcionalidades</a>
                 <a href="#fundador">Sobre</a>
-                <a href="equipa.html">Equipa</a>
+                <a href="equipa.html" onclick="return true;">Equipa</a>
                 <a href="login.html" class="btn-outline">Entrar</a>
                 <a href="login.html?tab=registo" class="btn-solid">Registar</a>
             </div>
@@ -772,7 +775,7 @@
                 <div class="fade-in-up">
                     <div class="hero-badge">🇲🇿 100% Gratuita para Estudantes Moçambicanos</div>
                     <h1>O futuro da educação <span>Online</span> começa aqui.</h1>
-                    <p>Partilhe conhecimento, conecte-se com outros estudantes e cresça academicamente. Sem custos, sem anúncios -- apenas educação.</p>
+                    <p>Partilhe conhecimento, conecte-se com outros estudantes e cresça academicamente. Sem custos, sem anúncios — apenas educação.</p>
                     
                     <div class="hero-stats">
                         <div class="stat-item">
@@ -896,13 +899,14 @@
         <section id="fundador" class="fundador">
             <div class="container fundador-content">
                 <div class="fundador-imagem">
-                <img src="logo.jpg" target_blank>
-                    <i class="fas fa-users" style="font-size: 5rem; color: var(--azul-escuro);"></i>
+                    <!-- COLOCA AQUI O CAMINHO DA TUA IMAGEM -->
+                    <img src="fundadores.jpg" alt="Teruma e Berto - Fundadores da Intelecta">
+                    <!-- Se a imagem não carregar, mostra fallback com iniciais -->
                 </div>
                 <div class="fundador-texto">
                     <h2>Sobre os Fundadores</h2>
-                   <p class="fundador-descricao">
-                        Movidos pela convicção de que a educação transforma vidas, <mark>Teruma Rodrigues</mark> & <mark>Berto Alexandre</mark> criaram a Intelecta 
+                    <p class="fundador-descricao">
+                        Movidos pela convicção de que a educação transforma vidas, <mark>Teruma Rodrigues</mark> e <mark>Berto Alexandre</mark> criaram a Intelecta 
                         como uma iniciativa sem fins lucrativos para fortalecer a educação em Moçambique. 
                         Estes dois jovens, estudantes da 12ª classe, unidos pelo sonho de dar aos estudantes 
                         uma ferramenta gratuita e poderosa para aprender, partilhar e crescer juntos.
@@ -1018,6 +1022,19 @@
                 navLinks.classList.remove('show');
             }
         });
+
+        // Fallback para imagem de perfil (se não carregar)
+        const img = document.querySelector('.fundador-imagem img');
+        if (img) {
+            img.onerror = function() {
+                this.style.display = 'none';
+                const fallback = document.createElement('div');
+                fallback.className = 'fundador-imagem';
+                fallback.style.cssText = 'background: var(--dourado); width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 5rem; color: var(--azul-escuro);';
+                fallback.innerHTML = '<i class="fas fa-users"></i>';
+                this.parentElement.appendChild(fallback);
+            };
+        }
     </script>
 </body>
 </html>
